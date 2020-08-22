@@ -1,3 +1,3 @@
 # BasicUtils
 --------
-This is a few basic utils that I use.
+This is a set of a few basic utils that I use.
