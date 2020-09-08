@@ -7,9 +7,17 @@ namespace BasicUtils
     /// </summary>
     public static class StringExtensions
     {
-        public static void Print(this string output)
+        public static void Print(this string output, bool showTimeStamp = true )
         {
-            Console.WriteLine($"{System.DateTime.Now}\t{output}");
+            if (showTimeStamp)
+            {
+                Console.WriteLine($"{System.DateTime.Now}\t{output}");
+            }
+            else
+            {
+                Console.WriteLine($"{output}");
+            }
+            
         }
 
         public static void PressAnyKey(this string prompt)
@@ -23,6 +31,21 @@ namespace BasicUtils
                 prompt.Print();
             }
             Console.ReadKey();
+        }
+
+        public static string PrintForInput(this string inputPrompt, bool showTimeStamp = false)
+        {
+            if (showTimeStamp)
+            {
+                Console.Write($"{DateTime.Now.ToString()}\t{inputPrompt}");
+            }
+            else
+            {
+                Console.Write(inputPrompt);
+            }
+
+            var output = Console.ReadLine().Trim();
+            return output.Replace(inputPrompt, "");
         }
     }
 }
