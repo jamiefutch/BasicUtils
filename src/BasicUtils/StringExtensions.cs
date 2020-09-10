@@ -7,8 +7,12 @@ namespace BasicUtils
     /// </summary>
     public static class StringExtensions
     {
-        public static void Print(this string output, bool showTimeStamp = true )
+        public static void Print(this string output, 
+            bool showTimeStamp = true,
+            ConsoleColor textColor = ConsoleColor.White)
         {
+            var tempColor = Console.ForegroundColor;
+            Console.ForegroundColor = textColor;
             if (showTimeStamp)
             {
                 Console.WriteLine($"{System.DateTime.Now}\t{output}");
@@ -17,7 +21,8 @@ namespace BasicUtils
             {
                 Console.WriteLine($"{output}");
             }
-            
+
+            Console.ForegroundColor = tempColor;
         }
 
         public static void PressAnyKey(this string prompt)
@@ -33,8 +38,12 @@ namespace BasicUtils
             Console.ReadKey();
         }
 
-        public static string PrintForInput(this string inputPrompt, bool showTimeStamp = false)
+        public static string PrintForInput(this string inputPrompt, 
+            bool showTimeStamp = false,
+            ConsoleColor textColor = ConsoleColor.White)
         {
+            var tempColor = Console.ForegroundColor;
+            Console.ForegroundColor = textColor;
             if (showTimeStamp)
             {
                 Console.Write($"{DateTime.Now.ToString()}\t{inputPrompt}");
@@ -45,6 +54,7 @@ namespace BasicUtils
             }
 
             var output = Console.ReadLine().Trim();
+            Console.ForegroundColor = tempColor;
             return output.Replace(inputPrompt, "");
         }
     }
