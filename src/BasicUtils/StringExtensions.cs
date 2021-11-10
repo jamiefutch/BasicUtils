@@ -25,11 +25,19 @@ namespace BasicUtils
             Console.ForegroundColor = tempColor;
         }
 
-        public static void PressAnyKey(this string prompt)
+        public static void PressAnyKey(this string prompt, 
+            bool showTimeStamp = true)
         {
             if (prompt.Length == 0)
             {
-                @"Press any key to continue...".Print();
+                if (showTimeStamp)
+                {
+                    Console.WriteLine($"{System.DateTime.Now}\tPress any key to continue...");
+                }
+                else
+                {
+                    @"Press any key to continue...".Print();   
+                }
             }
             else
             {

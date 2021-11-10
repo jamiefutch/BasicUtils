@@ -6,14 +6,8 @@ namespace BasicUtils
     {
         public static string ElapsedTime(this long ticks)
         {
-            TimeSpan ts = new TimeSpan(ticks);
-
-            return String.Format("{0}:{1}:{2}:{3}",
-                ts.Hours,
-                ts.Minutes,
-                ts.Seconds,
-                ts.Milliseconds
-            );
+            TimeSpan ts = new TimeSpan(ticks);            
+            return $"{ts.Hours.ToString("D2")}:{ ts.Minutes.ToString("D2")}:{ ts.Seconds.ToString("D2")}:{ ts.Milliseconds.ToString("D2")}";
         }
 
     }
