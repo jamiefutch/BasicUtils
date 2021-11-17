@@ -71,6 +71,43 @@ WriteToLog(string LogPath, string LogMsg)
 ```
 WaitAll(this IEnumerable<Thread> threads)
 ```
+### Menus
+```
+// add namespace
+using BasicUtils.Menus
+
+// create menu
+MenuUtils mu = new MenuUtils();
+Menu menu  = new Menu();
+menu.id = "1";
+menu.menuHeader = "Select an option";
+menu.menuFooter = "?\t";
+
+// add menu item 1
+MenuItem menuItem = new MenuItem();
+menuItem.id = "1";
+menuItem.title = "item 1";
+menu.AddMenuItem(menuItem);
+
+// add menu item 2
+menuItem = new MenuItem();
+menuItem.id = "2";
+menuItem.title = "item 2";
+menu.AddMenuItem(menuItem);
+
+// save menu to file
+mu.SaveMenusToFile("menus.txt");
+
+// load menu from file
+mu.LoadMenusFromFile("menus.txt");
+
+// retrieve menu from menus (by id)
+var m = mu.GetMenu("1");
+
+// diplay menu and return user reponse
+var response = m.DisplayMenu();
+```
+
 
 ### License
 ```

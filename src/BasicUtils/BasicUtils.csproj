@@ -7,10 +7,10 @@
     <Copyright>Jamie Futch, 2021</Copyright>
     <PackageLicenseFile>license.txt</PackageLicenseFile>
     <PackageProjectUrl>https://github.com/jamiefutch/BasicUtils</PackageProjectUrl>
-    <Version>1.0.5</Version>
-    <PackageVersion>1.0.5</PackageVersion>
-    <AssemblyVersion>1.0.5</AssemblyVersion>
-    <FileVersion>1.0.5</FileVersion>
+    <Version>1.0.6</Version>
+    <PackageVersion>1.0.6</PackageVersion>
+    <AssemblyVersion>1.0.6</AssemblyVersion>
+    <FileVersion>1.0.6</FileVersion>
     <RepositoryUrl>https://github.com/jamiefutch/BasicUtils</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>console utils; string utils</PackageTags>
@@ -21,6 +21,10 @@
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Text.Json" Version="6.0.0" />
   </ItemGroup>
 
 </Project>
