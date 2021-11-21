@@ -232,7 +232,13 @@ namespace BasicUtils
                 r = r.Replace("^", replacement);
 
             if (text.Contains("="))
-                r = r.Replace("=", replacement);            
+                r = r.Replace("=", replacement);
+
+            if (text.Contains("<"))
+                r = r.Replace("<", replacement);
+
+            if (text.Contains(">"))
+                r = r.Replace(">", replacement);
 
             return r;
         }
