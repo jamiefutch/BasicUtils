@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace BasicUtils
 {
@@ -128,6 +129,10 @@ namespace BasicUtils
             string replacement = "")
         {
             var r = text;
+
+            //if (text.Contains("\""))
+                r = r.Replace("\"", replacement);
+
             if (text.Contains("\t"))
                 r = r.Replace("\t", replacement);
 
@@ -153,7 +158,7 @@ namespace BasicUtils
                 r = r.Replace(";", replacement);                        
 
             if (text.Contains("!"))
-                r = r.Replace("!", replacement);
+                r = r.Replace("!", replacement);            
 
             return r;
         }
@@ -168,9 +173,6 @@ namespace BasicUtils
             string replacement = "")
         {
             var r = text;
-            
-            if (text.Contains("\\"))
-                r = r.Replace("\\", replacement);                
 
             if (text.Contains("("))
                 r = r.Replace("(", replacement);
@@ -228,6 +230,9 @@ namespace BasicUtils
 
             if (text.Contains("^"))
                 r = r.Replace("^", replacement);
+
+            if (text.Contains("="))
+                r = r.Replace("=", replacement);            
 
             return r;
         }
