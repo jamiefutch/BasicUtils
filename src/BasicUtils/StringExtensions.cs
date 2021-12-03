@@ -131,16 +131,20 @@ namespace BasicUtils
             var r = text;
 
             //if (text.Contains("\""))
-                r = r.Replace("\"", replacement);
-
-            if (text.Contains("\t"))
-                r = r.Replace("\t", replacement);
+            
+            if(text.Contains("\r\n"))
+                r = r.Replace("\r\n", replacement);
 
             if (text.Contains("\n"))
                 r = r.Replace("\n", replacement);
 
             if (text.Contains("\r"))
                 r = r.Replace("\r", replacement);
+
+            r = r.Replace("\"", replacement);
+
+            if (text.Contains("\t"))
+                r = r.Replace("\t", replacement);            
 
             if (text.Contains(","))
                 r = r.Replace(",", replacement);            
@@ -285,6 +289,12 @@ namespace BasicUtils
                 r = r.Replace("9", replacement);
 
             return r;
+        }
+
+        public static string RemoveMultipleSpaces(this string text, 
+            string replacement = " ")
+        {
+            return System.Text.RegularExpressions.Regex.Replace(text, @"\s+", " ");
         }
     }
 }
