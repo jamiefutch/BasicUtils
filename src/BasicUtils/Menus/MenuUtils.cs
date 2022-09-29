@@ -26,10 +26,10 @@ namespace BasicUtils.Menus
         /// <param name="menu"></param>
         public void AddMenu(Menu menu)
         {
-            if(menus.FindIndex(m => m.id == menu.id) == -1)
+            if(menus.FindIndex(m => m.Id == menu.Id) == -1)
                 menus.Add(menu);
             else
-                $"menu id: {menu.id}  not found".Print();
+                $"menu id: {menu.Id}  not found".Print();
         }
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace BasicUtils.Menus
         /// <returns></returns>
         public Menu GetMenu(string id)
         {
-            var menu = menus.Find(m => m.id == id);
+            var menu = menus.Find(m => m.Id == id);
             return menu;
         }
 

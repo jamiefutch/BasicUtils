@@ -1,5 +1,6 @@
 ﻿using System;
-using System.Linq;
+using System.Globalization;
+using System.Text.RegularExpressions;
 
 namespace BasicUtils
 {
@@ -39,6 +40,7 @@ namespace BasicUtils
         /// <param name="output"></param>
         /// <param name="showTimeStamp"></param>
         /// <param name="textColor"></param>
+        // ReSharper disable once MemberCanBePrivate.Global
         public static void PrintLine(this string output,
             bool showTimeStamp = true,
             ConsoleColor textColor = ConsoleColor.White)
@@ -96,21 +98,25 @@ namespace BasicUtils
         {
             var tempColor = Console.ForegroundColor;
             Console.ForegroundColor = textColor;
-            if (showTimeStamp)
-            {
-                Console.Write($"{DateTime.Now.ToString()}\t{inputPrompt}");
-            }
-            else
-            {
-                Console.Write(inputPrompt);
-            }
+            Console.Write(showTimeStamp
+                ? $"{DateTime.Now.ToString(CultureInfo.InvariantCulture)}\t{inputPrompt}"
+                : inputPrompt);
 
+            // ReSharper disable once PossibleNullReferenceException
             var output = Console.ReadLine().Trim();
             Console.ForegroundColor = tempColor;
             return output.Replace(inputPrompt, "");
         }
 
         
+        /// <summary>
+        /// not implemented
+        /// </summary>
+        /// <param name="inputPrompt"></param>
+        /// <param name="showTimeStamp"></param>
+        /// <param name="textColor"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
         public static string Input(this string inputPrompt,
             bool showTimeStamp = false,
             ConsoleColor textColor = ConsoleColor.White)
@@ -128,43 +134,7 @@ namespace BasicUtils
         public static string RemovePunctuation(this string text,
             string replacement = "")
         {
-            var r = text;
-
-            //if (text.Contains("\""))
-            
-            if(text.Contains("\r\n"))
-                r = r.Replace("\r\n", replacement);
-
-            if (text.Contains("\n"))
-                r = r.Replace("\n", replacement);
-
-            if (text.Contains("\r"))
-                r = r.Replace("\r", replacement);
-
-            r = r.Replace("\"", replacement);
-
-            if (text.Contains("\t"))
-                r = r.Replace("\t", replacement);            
-
-            if (text.Contains(","))
-                r = r.Replace(",", replacement);            
-
-            if (text.Contains("."))
-                r = r.Replace(".", replacement);
-
-            if (text.Contains("?"))
-                r = r.Replace("?", replacement);              
-                                      
-            if (text.Contains(":"))
-                r = r.Replace(":", replacement);
-
-            if (text.Contains(";"))
-                r = r.Replace(";", replacement);                        
-
-            if (text.Contains("!"))
-                r = r.Replace("!", replacement);            
-
-            return r;
+            return Regex.Replace(text, @"[^\w^\s]", "");
         }
 
         /// <summary>
@@ -176,75 +146,7 @@ namespace BasicUtils
         public static string RemoveSymbols(this string text,
             string replacement = "")
         {
-            var r = text;
-
-            if (text.Contains("("))
-                r = r.Replace("(", replacement);
-
-            if (text.Contains(")"))
-                r = r.Replace(")", replacement);
-
-            if (text.Contains("-"))
-                r = r = r.Replace("-", replacement);
-
-            if (text.Contains("$"))
-                r = r.Replace("$", replacement);                
-
-            if (text.Contains("\\"))
-                r = r.Replace("\\", replacement);
-
-            if (text.Contains("/"))
-                r = r.Replace("/", replacement);
-
-            if (text.Contains("+"))
-                r = r.Replace("+", replacement);
-
-            if (text.Contains("*"))
-                r = r.Replace("*", replacement);
-
-            if (text.Contains("&"))
-                r = r.Replace("&", replacement);
-
-            if (text.Contains("%"))
-                r = r.Replace("%", replacement);
-
-            if (text.Contains("#"))
-                r = r.Replace("#", replacement);
-
-            if (text.Contains("@"))
-                r = r.Replace("@", replacement);
-
-            if (text.Contains("["))
-                r = r.Replace("[", replacement);
-
-            if (text.Contains("]"))
-                r = r.Replace("]", replacement);
-
-            if (text.Contains("{"))
-                r = r.Replace("{", replacement);
-
-            if (text.Contains("}"))
-                r = r.Replace("}", replacement);
-
-            if (text.Contains("|"))
-                r = r.Replace("|", replacement);
-
-            if (text.Contains("~"))
-                r = r.Replace("~", replacement);
-
-            if (text.Contains("^"))
-                r = r.Replace("^", replacement);
-
-            if (text.Contains("="))
-                r = r.Replace("=", replacement);
-
-            if (text.Contains("<"))
-                r = r.Replace("<", replacement);
-
-            if (text.Contains(">"))
-                r = r.Replace(">", replacement);
-
-            return r;
+            return Regex.Replace(text, @"[^\w^\s]", "");
         }
 
         /// <summary>
@@ -254,47 +156,22 @@ namespace BasicUtils
         /// <param name="replacement"></param>
         /// <returns></returns>
         public static string RemoveNumbers(this string text,
-            string replacement = "")
+            string replacement = "" )
         {
-            var r = text;
-
-            if (text.Contains("0"))
-                r = r.Replace("0", replacement);
-
-            if (text.Contains("1"))
-                r = r.Replace("1", replacement);
-
-            if (text.Contains("2"))
-                r = r.Replace("2", replacement);
-
-            if (text.Contains("3"))
-                r = r.Replace("3", replacement);
-
-            if (text.Contains("4"))
-                r = r.Replace("4", replacement);
-
-            if (text.Contains("5"))
-                r = r.Replace("5", replacement);
-
-            if (text.Contains("6"))
-                r = r.Replace("6", replacement);
-
-            if (text.Contains("7"))
-                r = r.Replace("7", replacement);
-
-            if (text.Contains("8"))
-                r = r.Replace("8", replacement);
-
-            if (text.Contains("9"))
-                r = r.Replace("9", replacement);
-
-            return r;
+            return  Regex.Replace(text, @"[\d-]", replacement);
         }
 
+        /// <summary>
+        /// removed multiple spaces from string
+        /// replaces with replacement value
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="replacement"></param>
+        /// <returns></returns>
         public static string RemoveMultipleSpaces(this string text, 
             string replacement = " ")
         {
-            return System.Text.RegularExpressions.Regex.Replace(text, @"\s+", " ");
+            return Regex.Replace(text, @"\s+", replacement);
         }
     }
 }
