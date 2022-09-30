@@ -4,16 +4,17 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <Authors>Jamie Futch</Authors>
     <Description>Basic utils</Description>
-    <Copyright>Jamie Futch, 2021</Copyright>
+    <Copyright>Jamie Futch, 2022</Copyright>
     <PackageLicenseFile>license.txt</PackageLicenseFile>
     <PackageProjectUrl>https://github.com/jamiefutch/BasicUtils</PackageProjectUrl>
     <Version>1.0.8</Version>
-    <PackageVersion>1.0.8</PackageVersion>
+    <PackageVersion>1.0.9</PackageVersion>
     <AssemblyVersion>1.0.8</AssemblyVersion>
     <FileVersion>1.0.8</FileVersion>
     <RepositoryUrl>https://github.com/jamiefutch/BasicUtils</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>console utils; string utils</PackageTags>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>

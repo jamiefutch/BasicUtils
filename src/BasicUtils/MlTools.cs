@@ -5,9 +5,9 @@ using System.Text;
 
 namespace BasicUtils
 {
-    public class MlTools
+    public static class MlTools
     {
-        public List<string> GetNgramsFromString(string text, int length)
+        public static List<string> GetNgramsFromString(string text, int length)
         {
             var ngrams = new HashSet<string>();
             var arr = text.Split(' ');
