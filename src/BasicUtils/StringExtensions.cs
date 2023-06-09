@@ -1,6 +1,10 @@
 ﻿using System;
 using System.Globalization;
+using System.Linq;
 using System.Text.RegularExpressions;
+using System.Collections.Generic;
+
+
 
 namespace BasicUtils
 {
@@ -162,7 +166,7 @@ namespace BasicUtils
         }
 
         /// <summary>
-        /// removed multiple spaces from string
+        /// remove multiple spaces from string
         /// replaces with replacement value
         /// </summary>
         /// <param name="text"></param>
@@ -172,6 +176,38 @@ namespace BasicUtils
             string replacement = " ")
         {
             return Regex.Replace(text, @"\s+", replacement);
+        }
+
+        /// <summary>
+        /// remove tabs from string
+        /// replaces with replacement value
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="replacement"></param>
+        /// <returns></returns>
+        public static string RemoveTabs(this string text,
+            string replacement = " ")
+        {
+            return Regex.Replace(text, @"\t", replacement);
+        }
+
+        /// <summary>
+        /// removes stop words from string
+        /// </summary>
+        /// <param name="text"></param>
+        /// <returns></returns>
+        public static string RemoveStopWords(this string text)
+        {
+            var retval = new List<string>();
+            var t = text.Split(' ');
+            foreach (var s in t)
+            {
+                if (!StopWords.StopWordsList.Contains(s))
+                {
+                    retval.Add(s);
+                }
+            }
+            return string.Join(" ",retval);
         }
     }
 }

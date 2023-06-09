@@ -9,33 +9,39 @@ namespace BasicUtils
     {
         public static List<string> GetNgramsFromString(string text, int length)
         {
+            text = text.RemovePunctuation().RemoveSymbols().RemoveMultipleSpaces().Trim();
             var ngrams = new HashSet<string>();
             var arr = text.Split(' ');
             if(text.Length > 0)
             {
-                for (int i = 0; i < arr.Length - length; i++ )
+                for (int i = 0; i < arr.Length -1 ; i++ )
                 {
-                    for (int y = i; y <= (arr.Length - 1); y += length)
+                    for (int y = i; y <= (arr.Length - 1); y++ )
                     {
                         StringBuilder sb = new StringBuilder();
-                        sb.Append(arr[y]);
-                        try
+                        if (y + (length) <= arr.Length)
                         {
-                            if (arr[y + 1].Length > 0)
+                            sb.Append(arr[y]);
                             {
-                                sb.Append(", ");
-                                sb.Append(arr[y + 1]);
+                                if (length > 1)
+                                {
+                                    for (int j = 1; j <= length - 1; j++)
+                                    {
+                                        if ((y + j) < arr.Length)
+                                        {
+                                            sb.Append("|");
+                                            sb.Append(arr[y + j]);    
+                                        }
+                                    }
+                                }    
                             }
                         }
-                        catch (Exception e)
-                        {
-                            // outside the bounds of the array.
-                            //  just ignore it
-                        }
-            
                         try
                         {
-                            ngrams.Add(sb.ToString());
+                            if (sb.Length > 0)
+                            {
+                                ngrams.Add(sb.ToString());    
+                            }
                         }
                         catch (Exception e)
                         {
