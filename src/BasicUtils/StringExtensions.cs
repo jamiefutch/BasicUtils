@@ -14,6 +14,24 @@ namespace BasicUtils
     public static class StringExtensions
     {
         /// <summary>
+        /// lazy way to print to console (no line feed)
+        /// </summary>
+        /// <param name="output"></param>
+        public static void p(this string output)
+        {
+            Print(output);
+        }
+
+        /// <summary>
+        /// lazy way to print to console (with line feed)
+        /// </summary>
+        /// <param name="output"></param>
+        public static void pl(this string output)
+        {
+            PrintLine(output);
+        }        
+        
+        /// <summary>
         /// prints string to console
         /// </summary>
         /// <param name="output"></param>
