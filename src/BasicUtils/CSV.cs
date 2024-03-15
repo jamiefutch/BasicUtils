@@ -54,6 +54,7 @@ namespace BasicUtils
                         records.Add(line);
                     }
                 }
+
                 return records.ToArray();
             }
         }
