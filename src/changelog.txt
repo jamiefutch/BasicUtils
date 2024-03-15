@@ -1,9 +1,44 @@
 change log:
 
-2024-03-7
+2024-03-07 1.0.10
 	Branch: csvsupport
 		** fixed xml docs / comments; cleaned up warnings
 		** added simple csv methods
 		** corrected license files (dates) (rolls eyes)
 		** updated license for StopWords.cs
-	
+
+
+2024-03-08
+	Branch: 1.1.0
+		*** updated System.Text.Json to 8.0.2
+		** removed support for .netstandard
+		** MlTools
+			added GetNgramsFromStringAsync
+		** Csv.cs - renamed CSV.cs to Csv.cs
+			fixed naming of file from CSV to Csv
+			added LoadAsync
+			added LoadAsync
+			added Save 
+			added SaveAsync
+			added GetHeadersFromFile
+			added GetHeadersFromFileAsync
+			added GetHeadersFromRawCsv
+		** added ObjectUtils.cs - to be used in a future release
+			added GetTypeName 
+			added IsInt 
+			added IsInt
+			added IsFloat
+			added IsDouble
+			added IsSingle
+			added IsDecimal
+			added IsDateTime
+			added IsCurrency
+			added IsBool
+			added IsChar
+			added IsString
+
+
+
+
+
+			
