@@ -37,7 +37,10 @@ change log:
 			added IsChar
 			added IsString
 
-
+20024-04-03
+	Branch: AppSettings
+		** added AppSettings.cs
+			** added LoadSettings
 
 
 
