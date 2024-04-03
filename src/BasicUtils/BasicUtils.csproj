@@ -2,14 +2,14 @@
 
   <PropertyGroup>
     <Authors>Jamie Futch</Authors>
-    <Description>Basic utils for C#</Description>
+    <Description>Basic utils for applications</Description>
     <Copyright>Jamie Futch, 2024</Copyright>
     <PackageLicenseFile>license.txt</PackageLicenseFile>
     <PackageProjectUrl>https://github.com/jamiefutch/BasicUtils</PackageProjectUrl>
-    <Version>1.1.0</Version>
-    <PackageVersion>1.1.0</PackageVersion>
-    <AssemblyVersion>1.1.0</AssemblyVersion>
-    <FileVersion>1.1.0</FileVersion>
+    <Version>1.1.1</Version>
+    <PackageVersion>1.1.1</PackageVersion>
+    <AssemblyVersion>1.1.1</AssemblyVersion>
+    <FileVersion>1.1.1</FileVersion>
     <RepositoryUrl>https://github.com/jamiefutch/BasicUtils</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>console utils; string utils</PackageTags>
@@ -71,7 +71,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Text.Json" Version="8.0.2" />
+    <PackageReference Include="System.Text.Json" Version="8.0.3" />
   </ItemGroup>
 
 </Project>
