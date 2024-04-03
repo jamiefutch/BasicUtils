@@ -20,9 +20,17 @@ namespace BasicUtils
         /// <returns></returns>
         public static Dictionary<string,string> LoadSettings(string path)
         {
-            var json = File.ReadAllText(path);
-            var settings = JsonSerializer.Deserialize<Dictionary<string, string>>(json);
-            
+            Dictionary<string, string> settings;
+            try
+            {
+                var json = File.ReadAllText(path);
+                settings = JsonSerializer.Deserialize<Dictionary<string, string>>(json);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
             return settings;
         }
 
@@ -35,9 +43,17 @@ namespace BasicUtils
         /// <returns></returns>
         public static T LoadSettings<T>(string path, T settingsType)
         {
-            var json = File.ReadAllText(path);
-            var settings = JsonSerializer.Deserialize<T>(json);
-            return settings;
+            try
+            {
+                var json = File.ReadAllText(path);
+                var settings = JsonSerializer.Deserialize<T>(json);
+                return settings;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
         }
     }
 }
