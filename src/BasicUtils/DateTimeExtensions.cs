@@ -9,6 +9,7 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 **/
 using System;
+using System.Diagnostics;
 
 namespace BasicUtils
 { 
@@ -25,6 +26,17 @@ namespace BasicUtils
         public static string ElapsedTime(this long ticks)
         {
             TimeSpan ts = new TimeSpan(ticks);            
+            return $"{ts.Hours.ToString("D2")}:{ ts.Minutes.ToString("D2")}:{ ts.Seconds.ToString("D2")}:{ ts.Milliseconds.ToString("D2")}";
+        }
+
+        /// <summary>
+        /// returns time formatted as HH:MM:SS:MS
+        /// </summary>
+        /// <param name="sw"></param>
+        /// <returns></returns>
+        public static string TimeFormatted(this Stopwatch sw)
+        {
+            var ts = sw.Elapsed;
             return $"{ts.Hours.ToString("D2")}:{ ts.Minutes.ToString("D2")}:{ ts.Seconds.ToString("D2")}:{ ts.Milliseconds.ToString("D2")}";
         }
     }

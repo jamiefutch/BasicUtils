@@ -2,14 +2,14 @@
 
   <PropertyGroup>
     <Authors>Jamie Futch</Authors>
-    <Description>Basic utils for applications</Description>
+    <Description>Some basic utils for making .net applications a bit easier</Description>
     <Copyright>Jamie Futch, 2024</Copyright>
     <PackageLicenseFile>license.txt</PackageLicenseFile>
     <PackageProjectUrl>https://github.com/jamiefutch/BasicUtils</PackageProjectUrl>
-    <Version>1.1.1</Version>
-    <PackageVersion>1.1.1</PackageVersion>
-    <AssemblyVersion>1.1.1</AssemblyVersion>
-    <FileVersion>1.1.1</FileVersion>
+    <Version>1.1.2</Version>
+    <PackageVersion>1.1.2</PackageVersion>
+    <AssemblyVersion>1.1.2</AssemblyVersion>
+    <FileVersion>1.1.2</FileVersion>
     <RepositoryUrl>https://github.com/jamiefutch/BasicUtils</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>console utils; string utils</PackageTags>

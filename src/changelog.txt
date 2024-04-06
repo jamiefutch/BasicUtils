@@ -37,10 +37,16 @@ change log:
 			added IsChar
 			added IsString
 
-20024-04-03
-	Branch: AppSettings
+2024-04-03
+	Branch: 1.1.1
 		** added AppSettings.cs
 			** added LoadSettings
+
+2024-04-04
+	Branch: v1.1.2
+	** DateTimeExtensions.cs
+		** added TimeFormatted
+		
 
 
 
