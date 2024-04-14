@@ -26,7 +26,7 @@ namespace BasicUtils
         public static string ElapsedTime(this long ticks)
         {
             TimeSpan ts = new TimeSpan(ticks);            
-            return $"{ts.Hours.ToString("D2")}:{ ts.Minutes.ToString("D2")}:{ ts.Seconds.ToString("D2")}:{ ts.Milliseconds.ToString("D2")}";
+            return $"{ts.Hours:D2}:{ ts.Minutes:D2}:{ ts.Seconds:D2}:{ ts.Milliseconds:D2}";
         }
 
         /// <summary>
@@ -37,7 +37,7 @@ namespace BasicUtils
         public static string TimeFormatted(this Stopwatch sw)
         {
             var ts = sw.Elapsed;
-            return $"{ts.Hours.ToString("D2")}:{ ts.Minutes.ToString("D2")}:{ ts.Seconds.ToString("D2")}:{ ts.Milliseconds.ToString("D2")}";
+            return $"{ts.Hours:D2}:{ ts.Minutes:D2}:{ ts.Seconds:D2}:{ ts.Milliseconds:D2}";
         }
     }
 }
