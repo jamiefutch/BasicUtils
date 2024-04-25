@@ -116,7 +116,7 @@ namespace BasicUtils
         }
 
         /// <summary>
-        /// deprecated; replaced by Print and print line
+        /// prints a line and accepts inupt from the user.  Returns the input as a string
         /// </summary>
         /// <param name="inputPrompt"></param>
         /// <param name="showTimeStamp"></param>
@@ -234,6 +234,17 @@ namespace BasicUtils
                 }
             }
             return string.Join(" ",retval);
-        }        
+        }
+
+        /// <summary>
+        /// repeats a string n times
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="count"></param>
+        /// <returns></returns>
+        public static string Repeate(this string text, int count)
+        {
+            return string.Concat(Enumerable.Repeat(text, count));
+        }
     }
 }

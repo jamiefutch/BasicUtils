@@ -45,7 +45,13 @@ change log:
 2024-04-04
 	Branch: v1.1.2
 	** DateTimeExtensions.cs
-		** added TimeFormatted
+		added TimeFormatted
+
+2024-04-25
+	Branch: v1.1.2
+	** Added Math.cs
+		added FastModForLoop(long limitcount, long limit)
+
 		
 
 
