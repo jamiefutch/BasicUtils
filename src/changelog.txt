@@ -51,6 +51,22 @@ change log:
 	Branch: v1.1.2
 	** Added Math.cs
 		added FastModForLoop(long limitcount, long limit)
+		BenchmarkDotNet v0.13.12, Windows 11 (10.0.22631.3447/23H2/2023Update/SunValley3)
+		Intel Xeon E-2286G CPU 4.00GHz, 1 CPU, 12 logical and 6 physical cores
+		.NET SDK 8.0.300-preview.24203.14
+		  [Host]     : .NET 8.0.4 (8.0.424.16909), X64 RyuJIT AVX2 [AttachedDebugger]
+		  DefaultJob : .NET 8.0.4 (8.0.424.16909), X64 RyuJIT AVX2
+
+
+		| Method  | Mean    | Error    | StdDev   |
+		|-------- |--------:|---------:|---------:|
+		| Modrun  | 3.317 s | 0.1950 s | 0.5750 s |
+		| Modrun2 | 3.280 s | 0.1890 s | 0.5572 s |
+		| Modrun3 | 3.373 s | 0.2068 s | 0.6097 s |
+		
+		Modrun: modrun = i % limit (1,000,000,000 iterations)
+		Modrun2: Math.fastmodforloop = Math.FastModForLoop(i, limit) (1,000,000,000 iterations)
+		Modrun3: (limitcount > (limit - 1)) inline code  (1,000,000,000 iterations)
 
 		
 
