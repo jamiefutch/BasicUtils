@@ -18,13 +18,7 @@ foreach(string n in ngrams)
 Console.WriteLine("---------------------------");
 Console.WriteLine("---------------------------");
 
-// display ngrams
-Console.WriteLine("Ngrams2:");
-Console.WriteLine("---------------------------");
-foreach (string n in ngrams2)
-    Console.WriteLine(n);
-Console.WriteLine("---------------------------");
-Console.WriteLine("---------------------------");
+
 
 // display stop words removed
 Console.WriteLine("Stop Words:");
