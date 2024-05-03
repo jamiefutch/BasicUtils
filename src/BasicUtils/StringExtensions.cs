@@ -13,6 +13,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Collections.Generic;
+using System.Text;
 
 namespace BasicUtils
 {
@@ -161,10 +162,17 @@ namespace BasicUtils
         /// <param name="text"></param>
         /// <param name="replacement"></param>
         /// <returns></returns>
-        public static string RemovePunctuation(this string text,
-            string replacement = "")
+        public static string RemovePunctuation(this string text)
         {
-            return Regex.Replace(text, @"[^\w^\s]", "");
+            var result = new StringBuilder(text.Length);
+            foreach (var c in text)
+            {
+                if (!char.IsPunctuation(c))
+                {
+                    result.Append(c);
+                }
+            }
+            return result.ToString();
         }
 
         /// <summary>
@@ -173,10 +181,17 @@ namespace BasicUtils
         /// <param name="text"></param>
         /// <param name="replacement"></param>
         /// <returns></returns>
-        public static string RemoveSymbols(this string text,
-            string replacement = "")
+        public static string RemoveSymbols(this string text)
         {
-            return Regex.Replace(text, @"[^\w^\s]", "");
+            var result = new StringBuilder(text.Length);
+            foreach (var c in text)
+            {
+                if (char.IsLetterOrDigit(c) || char.IsWhiteSpace(c))
+                {
+                    result.Append(c);
+                }
+            }
+            return result.ToString();
         }
 
         /// <summary>
@@ -185,10 +200,17 @@ namespace BasicUtils
         /// <param name="text"></param>
         /// <param name="replacement"></param>
         /// <returns></returns>
-        public static string RemoveNumbers(this string text,
-            string replacement = "" )
+        public static string RemoveNumbers(this string text)
         {
-            return  Regex.Replace(text, @"[\d-]", replacement);
+            var result = new StringBuilder(text.Length);
+            foreach (var c in text)
+            {
+                if (!char.IsDigit(c))
+                {
+                    result.Append(c);
+                }
+            }
+            return result.ToString();
         }
 
         /// <summary>
@@ -198,10 +220,10 @@ namespace BasicUtils
         /// <param name="text"></param>
         /// <param name="replacement"></param>
         /// <returns></returns>
-        public static string RemoveMultipleSpaces(this string text, 
-            string replacement = " ")
+        public static string RemoveMultipleSpaces(this string text, string replacement = " ")
         {
-            return Regex.Replace(text, @"\s+", replacement);
+            var words = text.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            return string.Join(replacement, words);
         }
 
         /// <summary>
@@ -211,10 +233,9 @@ namespace BasicUtils
         /// <param name="text"></param>
         /// <param name="replacement"></param>
         /// <returns></returns>
-        public static string RemoveTabs(this string text,
-            string replacement = " ")
+        public static string RemoveTabs(this string text, string replacement = " ")
         {
-            return Regex.Replace(text, @"\t", replacement);
+            return text.Replace("\t", replacement);
         }
 
         /// <summary>
@@ -224,16 +245,10 @@ namespace BasicUtils
         /// <returns></returns>
         public static string RemoveStopWords(this string text)
         {
-            var retval = new List<string>();
-            var t = text.Split(' ');
-            foreach (var s in t)
-            {
-                if (!StopWords.StopWordsList.Contains(s))
-                {
-                    retval.Add(s);
-                }
-            }
-            return string.Join(" ",retval);
+            var words = text.Split(' ');
+            var stopWordsSet = new HashSet<string>(StopWords.StopWordsList);
+            var filteredWords = words.Where(word => !stopWordsSet.Contains(word));
+            return string.Join(" ", filteredWords);
         }
 
         /// <summary>
@@ -242,7 +257,7 @@ namespace BasicUtils
         /// <param name="text"></param>
         /// <param name="count"></param>
         /// <returns></returns>
-        public static string Repeate(this string text, int count)
+        public static string Repeat(this string text, int count)
         {
             return string.Concat(Enumerable.Repeat(text, count));
         }
