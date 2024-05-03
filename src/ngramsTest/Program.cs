@@ -8,7 +8,7 @@ sentence = sentence.RemoveMultipleSpaces().RemoveSymbols();
 
 
 var ngrams = MlTools.GetNgramsFromString(sentence,3);
-var ngrams2 = MlTools.GetNgramsFromString2(sentence, 3);
+
 
 // display ngrams
 Console.WriteLine("Ngrams:");

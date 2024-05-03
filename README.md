@@ -62,6 +62,8 @@ SetForeColor(ConsoleColor color)
 ### DateTimeExtensions
 ```
 ElapsedTime(this long ticks)
+
+TimeFormatted(this Stopwatch sw)
 ```
 ### LogFile
 ```
@@ -108,25 +110,57 @@ var m = mu.GetMenu("1");
 var response = m.DisplayMenu();
 ```
 
-### BasicUtils.CSV
-```
-// loads the raw CSV file into a string array (one dimension)
-public static string[] LoadRawCsv(string path, bool hasHeader = true)        
+## Csv
 
-// loads the CSV file into a list of string arrays
-public static List<string[]> Load(string path, char delimiter = ',', bool hasHeader = true)
-```
+The `Csv` class provides support for simple CSV operations.
 
-### BasicUtils.MlTools
-```
-// gets the ngrams from a string
-public static List<string> GetNgramsFromString(string text, int length)
-```
+### Public Methods
+
+- `string[] LoadRawCsv(string path, bool hasHeader = true)`: This method loads the raw CSV file into a string array. If `hasHeader` is true, the first line is skipped.
+
+- `Task<string[]> LoadRawCsvAsync(string path, bool hasHeader = true)`: This is the asynchronous version of the `LoadRawCsv` method.
+
+- `List<string[]> Load(string path, char delimiter = ',', bool hasHeader = true)`: This method loads the CSV file into a list of string arrays. If `hasHeader` is true, the first line is skipped.
+
+- `Task<List<string[]>> LoadAsync(string path, char delimiter = ',', bool hasHeader = true)`: This is the asynchronous version of the `Load` method.
+
+- `void Save(string path, List<string[]> data, char delimiter = ',')`: This method saves a list of string arrays to a CSV file.
+
+- `Task SaveAsync(string path, List<string[]> data, char delimiter = ',')`: This is the asynchronous version of the `Save` method.
+
+- `string[] GetHeadersFromFile(string path, char delimiter = ',')`: This method returns the headers from a CSV file.
+
+- `Task<string[]> GetHeadersFromFileAsync(string path, char delimiter = ',')`: This is the asynchronous version of the `GetHeadersFromFile` method.
+
+- `string[] GetHeadersFromRawCsv(string[] csv, char delimiter = ',')`: This method returns the headers from a raw CSV string array.
+
+
+## MlTools
+
+The `MlTools` class provides basic machine learning tools.
+
+### Public Methods
+
+- `List<string> GetNgramsFromString(string text, int length)`: This method generates a list of n-grams from a given string. The `text` parameter is the input string from which n-grams are to be generated, and the `length` parameter specifies the number of words in each n-gram.
+
+- `Task<List<string>> GetNgramsFromStringAsync(string text, int length)`: This is the asynchronous version of the `GetNgramsFromString` method. It also generates a list of n-grams from a given string. The `text` parameter is the input string from which n-grams are to be generated, and the `length` parameter specifies the number of words in each n-gram.
+
+
+## AppSettings
+
+The `AppSettings` class provides utility methods for loading settings from a JSON file.
+
+### Public Methods
+
+- `Dictionary<string,string> LoadSettings(string path)`: This method loads settings from a JSON file. The settings are returned as a dictionary where each key-value pair represents a setting. The `path` parameter specifies the path to the JSON file.
+
+- `T LoadSettings<T>(string path, T settingsType)`: This is a generic method that loads settings from a JSON file. The settings are deserialized into an object of type `T`. The `path` parameter specifies the path to the JSON file, and the `settingsType` parameter is an instance of the `T` type that specifies the type to which the settings should be deserialized.
+
 
 ### License
 ```
 The MIT License ~(MIT)
-Copyright © 2024 Jamie Futch
+Copyright Jamie Futch
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the “Software”), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
