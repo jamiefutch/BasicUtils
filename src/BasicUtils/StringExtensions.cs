@@ -64,6 +64,83 @@ namespace BasicUtils
             Console.ForegroundColor = tempColor;
         }
 
+        
+        /// <summary>
+        /// Print exception to console - just the error message
+        /// </summary>
+        /// <param name="e">Exception object</param>
+        /// <param name="showTimeStamp">show time stamp as bool</param>
+        /// <param name="textColor">default is red</param>
+        public static void Print(this Exception e, 
+            bool showTimeStamp = true,
+            ConsoleColor textColor = ConsoleColor.Red)
+        {
+            var tempColor = Console.ForegroundColor;
+            Console.ForegroundColor = textColor;
+            if (showTimeStamp)
+            {
+                ($"{System.DateTime.Now}\t{e}").Print();
+            }
+            else
+            {
+                ($"{e}").PrintLine();
+            }
+
+            Console.ForegroundColor = tempColor;
+        }
+
+        /// <summary>
+        /// Print exception to console - full error message
+        /// </summary>
+        /// <param name="e">Exception object</param>
+        /// <param name="showTimeStamp"></param>
+        /// <param name="textColor"></param>
+        public static void PrintFullError(this Exception e,
+            bool showTimeStamp = true,
+            ConsoleColor textColor = ConsoleColor.Red)
+        {
+            var tempColor = Console.ForegroundColor;
+            Console.ForegroundColor = textColor;
+            if (showTimeStamp)
+            {
+                ($"{System.DateTime.Now}\t{e}").Print();
+            }
+            else
+            {
+                ($"{e.StackTrace}").PrintLine( false, ConsoleColor.Yellow);
+                ($"{e.InnerException}").PrintLine( false, ConsoleColor.Yellow);
+                ($"{e.Source}").PrintLine( false, ConsoleColor.Yellow);
+                ($"{e.TargetSite}").PrintLine( false, ConsoleColor.Yellow);
+                ($"{e.Data}").PrintLine( false, ConsoleColor.Yellow);
+                ($"{e.GetType()}").PrintLine( false, ConsoleColor.Yellow);
+                ($"{e.GetType().Name}").PrintLine( false, ConsoleColor.Yellow);
+                ($"{e.GetType().FullName}").PrintLine( false, ConsoleColor.Yellow);
+                ($"{e.GetType().Assembly}").PrintLine( false, ConsoleColor.Yellow);
+                ($"{e.GetType().AssemblyQualifiedName}").PrintLine( false, ConsoleColor.Yellow);
+                ($"{e.GetType().BaseType}").PrintLine( false, ConsoleColor.Yellow);
+                var memberInfo = e.GetType().BaseType;
+                if (memberInfo != null)
+                {
+                    ($"{memberInfo.Name}").PrintLine(false, ConsoleColor.Yellow);
+                    ($"{memberInfo.FullName}").PrintLine(false, ConsoleColor.Yellow);
+                    ($"{memberInfo.Assembly}").PrintLine(false, ConsoleColor.Yellow);
+                    ($"{memberInfo.AssemblyQualifiedName}").PrintLine(false, ConsoleColor.Yellow);
+                    ($"{memberInfo.BaseType}").PrintLine(false, ConsoleColor.Yellow);
+                    if (memberInfo.BaseType != null)
+                    {
+                        ($"{memberInfo.BaseType.Name}").PrintLine(false, ConsoleColor.Yellow);
+                        ($"{memberInfo.BaseType.FullName}").PrintLine(false, ConsoleColor.Yellow);
+                        ($"{memberInfo.BaseType.Assembly}").PrintLine(false, ConsoleColor.Yellow);
+                        ($"{memberInfo.BaseType.AssemblyQualifiedName}").PrintLine(false, ConsoleColor.Yellow);
+                        ($"{memberInfo.BaseType.BaseType}").PrintLine(false, ConsoleColor.Yellow);
+                        if (memberInfo.BaseType.BaseType != null)
+                            ($"{memberInfo.BaseType.BaseType.Name}").PrintLine(false, ConsoleColor.Yellow);
+                    }
+                }
+            }
+
+            Console.ForegroundColor = tempColor;
+        }
 
         /// <summary>
         /// Prints string to console 
