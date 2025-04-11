@@ -17,6 +17,8 @@ or, using nuget...
 Install-Package BasicUtils
 ```
 
+
+
 ## Usage
 --------
 ### StringExtensions
