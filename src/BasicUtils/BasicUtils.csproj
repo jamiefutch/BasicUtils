@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Authors>Jamie Futch</Authors>
     <Description>Some basic utils for making .net applications a bit easier</Description>
-    <Copyright>Jamie Futch, 2024</Copyright>
+    <Copyright>Jamie Futch, 2025</Copyright>
     <PackageLicenseFile>license.txt</PackageLicenseFile>
     <PackageProjectUrl>https://github.com/jamiefutch/BasicUtils</PackageProjectUrl>
     <Version>1.1.2</Version>
