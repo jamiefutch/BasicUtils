@@ -10,6 +10,7 @@
   <ItemGroup>
     <PackageReference Include="BasicUtils" Version="1.1.2" />
     <PackageReference Include="BenchmarkDotNet" Version="0.13.12" />
+    <PackageReference Include="System.Text.Json" Version="9.0.4" />
   </ItemGroup>
 
 </Project>

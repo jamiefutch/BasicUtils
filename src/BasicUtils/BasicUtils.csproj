@@ -16,11 +16,12 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <NeutralLanguage>en</NeutralLanguage>
     <PackageLicenseUrl></PackageLicenseUrl>
-    <TargetFrameworks>net6.0;net7.0;net8.0</TargetFrameworks>
+    <TargetFrameworks></TargetFrameworks>
     <Title>BasisUtils</Title>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <AnalysisLevel>none</AnalysisLevel>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <TargetFramework>net9.0</TargetFramework>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0|AnyCPU'">
@@ -71,7 +72,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Text.Json" Version="8.0.3" />
+    <PackageReference Include="System.Text.Json" Version="9.0.4" />
   </ItemGroup>
 
 </Project>
