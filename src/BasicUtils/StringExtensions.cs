@@ -1,4 +1,5 @@
-﻿/** 
+﻿#pragma warning disable CS1587 // XML comment is not placed on a valid language element
+/** 
 The MIT License (MIT)
 Copyright © 2025 Jamie Futch
 
@@ -260,6 +261,33 @@ namespace BasicUtils
         public static string Repeat(this string text, int count)
         {
             return string.Concat(Enumerable.Repeat(text, count));
+        }
+
+        /// <summary>
+        /// Generates a random string of the specified length.
+        /// </summary>
+        /// <param name="length">The length of the random string to generate.</param>
+        /// <param name="includeSpecialCharacters">
+        /// A boolean value indicating whether the generated string should include special characters.
+        /// If <c>true</c>, special characters will be included; otherwise, only alphanumeric characters will be used.
+        /// </param>
+        /// <returns>A randomly generated string of the specified length.</returns>
+        static string CreateRandomString(int length, bool includeSpecialCharacters = false)
+        {
+            // ReSharper disable once StringLiteralTypo
+            string chars;
+            if (!includeSpecialCharacters)
+            {
+                chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            }
+            else
+            {
+                chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_=+[]{}|;:',.<>/?`~";
+            }
+
+            Random random = new Random();
+            return new string(Enumerable.Repeat(chars, length)
+                .Select(s => s[random.Next(s.Length)]).ToArray());
         }
     }
 }
