@@ -6,25 +6,36 @@
     <Copyright>Jamie Futch, 2025</Copyright>
     <PackageLicenseFile>license.txt</PackageLicenseFile>
     <PackageProjectUrl>https://github.com/jamiefutch/BasicUtils</PackageProjectUrl>
-    <Version>1.1.2</Version>
-    <PackageVersion>1.1.2</PackageVersion>
-    <AssemblyVersion>1.1.2</AssemblyVersion>
-    <FileVersion>1.1.2</FileVersion>
+    <Version>1.2.0</Version>
+    <PackageVersion>1.2.0</PackageVersion>
+    <AssemblyVersion>1.2.0</AssemblyVersion>
+    <FileVersion>1.2.0</FileVersion>
     <RepositoryUrl>https://github.com/jamiefutch/BasicUtils</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <PackageTags>console utils; string utils</PackageTags>
+    <PackageTags>console utils; string utils; csv; text processing; machine learning; nlp; menu; datetime; logging; threading; .NET; utilities; extension methods; data processing</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <NeutralLanguage>en</NeutralLanguage>
     <PackageLicenseUrl></PackageLicenseUrl>
-    <TargetFrameworks></TargetFrameworks>
+    <TargetFrameworks>net9.0;net8;net7;net6;</TargetFrameworks>
     <Title>BasisUtils</Title>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <AnalysisLevel>none</AnalysisLevel>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
-    <TargetFramework>net9.0</TargetFramework>
+    <TargetFramework></TargetFramework>
+    <Platforms>AnyCPU;ARM32;ARM64</Platforms>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0|AnyCPU'">
+    <WarningLevel>7</WarningLevel>
+    <NoWarn>1701;1702;CS0168; CS1587</NoWarn>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0|ARM64'">
+    <WarningLevel>7</WarningLevel>
+    <NoWarn>1701;1702;CS0168; CS1587</NoWarn>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0|ARM32'">
     <WarningLevel>7</WarningLevel>
     <NoWarn>1701;1702;CS0168; CS1587</NoWarn>
   </PropertyGroup>
@@ -34,7 +45,25 @@
     <NoWarn>1701;1702;CS0168; CS1587</NoWarn>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0|ARM64'">
+    <WarningLevel>7</WarningLevel>
+    <NoWarn>1701;1702;CS0168; CS1587</NoWarn>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0|ARM32'">
+    <WarningLevel>7</WarningLevel>
+    <NoWarn>1701;1702;CS0168; CS1587</NoWarn>
+  </PropertyGroup>
+
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard2.0|AnyCPU'">
+    <NoWarn>1701;1702;CS0168; CS1587</NoWarn>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard2.0|ARM64'">
+    <NoWarn>1701;1702;CS0168; CS1587</NoWarn>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard2.0|ARM32'">
     <NoWarn>1701;1702;CS0168; CS1587</NoWarn>
   </PropertyGroup>
 
@@ -42,7 +71,23 @@
     <NoWarn>1701;1702;CS0168; CS1587</NoWarn>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0|ARM64'">
+    <NoWarn>1701;1702;CS0168; CS1587</NoWarn>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0|ARM32'">
+    <NoWarn>1701;1702;CS0168; CS1587</NoWarn>
+  </PropertyGroup>
+
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0|AnyCPU'">
+    <NoWarn>1701;1702;CS0168; CS1587</NoWarn>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0|ARM64'">
+    <NoWarn>1701;1702;CS0168; CS1587</NoWarn>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0|ARM32'">
     <NoWarn>1701;1702;CS0168; CS1587</NoWarn>
   </PropertyGroup>
 
@@ -50,11 +95,35 @@
     <NoWarn>1701;1702;CS0168; CS1587</NoWarn>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netstandard2.0|ARM64'">
+    <NoWarn>1701;1702;CS0168; CS1587</NoWarn>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netstandard2.0|ARM32'">
+    <NoWarn>1701;1702;CS0168; CS1587</NoWarn>
+  </PropertyGroup>
+
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0|AnyCPU'">
     <NoWarn>1701;1702;CS0168; CS1587</NoWarn>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0|ARM64'">
+    <NoWarn>1701;1702;CS0168; CS1587</NoWarn>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0|ARM32'">
+    <NoWarn>1701;1702;CS0168; CS1587</NoWarn>
+  </PropertyGroup>
+
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0|AnyCPU'">
+    <NoWarn>1701;1702;CS0168; CS1587</NoWarn>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0|ARM64'">
+    <NoWarn>1701;1702;CS0168; CS1587</NoWarn>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0|ARM32'">
     <NoWarn>1701;1702;CS0168; CS1587</NoWarn>
   </PropertyGroup>
 
