@@ -1,28 +1,16 @@
 # BasicUtils
---------
-A few basic console and text utils that I use when developing / prototyping code.
 
-## Source
-[Github Repo](https://github.com/jamiefutch/BasicUtils)
+A few basic console and text utilities for .NET, useful for development and prototyping.
 
-## Nuget
-[Nuget: BasicUtils](https://www.nuget.org/packages/BasicUtils/)
-
-## Installation
-```
-dotnet add package BasicUtils
-```
-or, using nuget...
-```
-Install-Package BasicUtils
-```
-
+## Installationdotnet add package BasicUtilsor, using nuget...Install-Package BasicUtils
 
 
 ## Usage
---------
+
 ### StringExtensions
-```
+
+Extension methods for string manipulation and console interaction:
+
 Print(this string output, 
             bool showTimeStamp = true,
             ConsoleColor textColor = ConsoleColor.White)
@@ -45,11 +33,7 @@ RemoveSymbols(this string text,
             string replacement = "")
 
 RemoveNumbers(this string text,
-            string replacement = "")
-```
-### ConsoleExtensions
-```
-CacheForeColor()
+            string replacement = "")### ConsoleExtensionsCacheForeColor()
 
 CacheBgColor()
 
@@ -59,25 +43,9 @@ RestoreCachedBgColor()
 
 SetBgColor(ConsoleColor color)
 
-SetForeColor(ConsoleColor color)
-```
-### DateTimeExtensions
-```
-ElapsedTime(this long ticks)
+SetForeColor(ConsoleColor color)### DateTimeExtensionsElapsedTime(this long ticks)
 
-TimeFormatted(this Stopwatch sw)
-```
-### LogFile
-```
-WriteToLog(string LogPath, string LogMsg)
-```
-### BasicUtils.Threading
-```
-WaitAll(this IEnumerable<Thread> threads)
-```
-### Menus
-```
-// add namespace
+TimeFormatted(this Stopwatch sw)### LogFileWriteToLog(string LogPath, string LogMsg)### BasicUtils.ThreadingWaitAll(this IEnumerable<Thread> threads)### Menus// add namespace
 using BasicUtils.Menus
 
 // create menu
@@ -110,8 +78,6 @@ var m = mu.GetMenu("1");
 
 // diplay menu and return user reponse
 var response = m.DisplayMenu();
-```
-
 ## Csv
 
 The `Csv` class provides support for simple CSV operations.
@@ -139,7 +105,9 @@ The `Csv` class provides support for simple CSV operations.
 
 ## MlTools
 
-The `MlTools` class provides basic machine learning tools.
+### MlTools
+
+Basic machine learning tools:
 
 ### Public Methods
 
@@ -150,7 +118,9 @@ The `MlTools` class provides basic machine learning tools.
 
 ## AppSettings
 
-The `AppSettings` class provides utility methods for loading settings from a JSON file.
+### AppSettings
+
+Utility methods for loading settings from a JSON file:
 
 ### Public Methods
 
@@ -159,9 +129,11 @@ The `AppSettings` class provides utility methods for loading settings from a JSO
 - `T LoadSettings<T>(string path, T settingsType)`: This is a generic method that loads settings from a JSON file. The settings are deserialized into an object of type `T`. The `path` parameter specifies the path to the JSON file, and the `settingsType` parameter is an instance of the `T` type that specifies the type to which the settings should be deserialized.
 
 
-### License
-```
-The MIT License ~(MIT)
+### Math
+
+Fast modulo operation for large loops:
+
+### LicenseThe MIT License ~(MIT)
 Copyright Jamie Futch
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the “Software”), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
@@ -169,4 +141,3 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-```
