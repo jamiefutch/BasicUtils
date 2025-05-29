@@ -1,4 +1,5 @@
-﻿/** 
+﻿#pragma warning disable CS1587 // XML comment is not placed on a valid language element
+/** 
 The MIT License (MIT)
 Copyright © 2025 Jamie Futch
 
