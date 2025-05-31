@@ -21,16 +21,15 @@ using System.Threading.Tasks;
 namespace BasicUtils
 {
     /// <summary>
-    /// support for simple CSV operations
+    /// Provides utility methods for simple CSV (Comma-Separated Values) file operations, including loading, saving, and header extraction.
     /// </summary>
     public static class Csv
     {
-        /// <summary>
-        /// loads the raw CSV file into a string array (one dimension)
-        /// </summary>
-        /// <param name="path"></param>
-        /// <param name="hasHeader"></param>
-        /// <returns>csv as array of csv lines</returns>
+        // <summary>
+        /// Loads the contents of a CSV file into a string array, where each element represents a line from the file. 
+        /// <param name="path">The file path to the CSV file.</param>
+        /// <param name="hasHeader">If true, skips the first line (header) in the result.</param>
+        /// <returns>An array of strings, each representing a line from the CSV file.</returns>
         public static string[] LoadRawCsv(string path, 
             bool hasHeader = true)        
         {
@@ -61,11 +60,11 @@ namespace BasicUtils
         }
 
         /// <summary>
-        /// async loads the raw CSV file into a string array (one dimension)
+        /// Asynchronously loads the contents of a CSV file into a string array, where each element represents a line from the file.
         /// </summary>
-        /// <param name="path"></param>
-        /// <param name="hasHeader"></param>
-        /// <returns>csv as array of csv lines</returns>
+        /// <param name="path">The file path to the CSV file.</param>
+        /// <param name="hasHeader">If true, skips the first line (header) in the result.</param>
+        /// <returns>A task representing the asynchronous operation, with a result of an array of strings, each representing a line from the CSV file.</returns>
         public static async Task<string[]> LoadRawCsvAsync(string path,
             bool hasHeader = true)
         {
@@ -96,12 +95,12 @@ namespace BasicUtils
 
 
         /// <summary>
-        /// loads the CSV file into a list of string arrays
+        /// Loads the contents of a CSV file into a list of string arrays, where each array represents a row split by the specified delimiter.
         /// </summary>
-        /// <param name="path"></param>
-        /// <param name="delimiter"></param>
-        /// <param name="hasHeader"></param>
-        /// <returns>list of string arrays</returns>
+        /// <param name="path">The file path to the CSV file.</param>
+        /// <param name="delimiter">The character used to separate values in the CSV file. Defaults to ','.</param>
+        /// <param name="hasHeader">If true, skips the first line (header) in the result.</param>
+        /// <returns>A list of string arrays, each representing a row from the CSV file.</returns>
         public static List<string[]> Load(string path, 
             char delimiter = ',',
             bool hasHeader = true)
@@ -130,16 +129,16 @@ namespace BasicUtils
                 }
                 return records;
             }
-        }        
-        
+        }
+
 
         /// <summary>
-        /// async loads the CSV file into a list of string arrays
+        /// Asynchronously loads the contents of a CSV file into a list of string arrays, where each array represents a row split by the specified delimiter.
         /// </summary>
-        /// <param name="path"></param>
-        /// <param name="delimiter"></param>
-        /// <param name="hasHeader"></param>
-        /// <returns></returns>
+        /// <param name="path">The file path to the CSV file.</param>
+        /// <param name="delimiter">The character used to separate values in the CSV file. Defaults to ','.</param>
+        /// <param name="hasHeader">If true, skips the first line (header) in the result.</param>
+        /// <returns>A task representing the asynchronous operation, with a result of a list of string arrays, each representing a row from the CSV file.</returns>
         public static async Task<List<string[]>> LoadAsync(string path,
             char delimiter = ',',
             bool hasHeader = true)
@@ -171,11 +170,11 @@ namespace BasicUtils
         }
 
         /// <summary>
-        /// saves a list of string arrays to a CSV file
+        /// Saves a list of string arrays to a CSV file, using the specified delimiter to separate values.
         /// </summary>
-        /// <param name="path"></param>
-        /// <param name="data"></param>
-        /// <param name="delimiter"></param>
+        /// <param name="path">The file path to save the CSV file to.</param>
+        /// <param name="data">The list of string arrays to write to the file. Each array represents a row.</param>
+        /// <param name="delimiter">The character used to separate values in the CSV file. Defaults to ','.</param>
         public static void Save(string path,
                        List<string[]> data, 
                                   char delimiter = ',')
@@ -189,12 +188,12 @@ namespace BasicUtils
         }
 
         /// <summary>
-        /// async saves a list of string arrays to a CSV file
+        /// Asynchronously saves a list of string arrays to a CSV file, using the specified delimiter to separate values.
         /// </summary>
-        /// <param name="path"></param>
-        /// <param name="data"></param>
-        /// <param name="delimiter"></param>
-        /// <returns></returns>
+        /// <param name="path">The file path to save the CSV file to.</param>
+        /// <param name="data">The list of string arrays to write to the file. Each array represents a row.</param>
+        /// <param name="delimiter">The character used to separate values in the CSV file. Defaults to ','.</param>
+        /// <returns>A task representing the asynchronous save operation.</returns>
         public static async Task SaveAsync(string path,
                        List<string[]> data,
                                   char delimiter = ',')
@@ -208,37 +207,37 @@ namespace BasicUtils
         }
 
         /// <summary>
-        /// returns the headers from a CSV file
+        /// Retrieves the header row from a CSV file as an array of column names.
         /// </summary>
-        /// <param name="path"></param>
-        /// <param name="delimiter"></param>
-        /// <returns></returns>
+        /// <param name="path">The file path to the CSV file.</param>
+        /// <param name="delimiter">The character used to separate values in the CSV file. Defaults to ','.</param>
+        /// <returns>An array of strings representing the column headers, or an empty array if the file is empty.</returns>
         public static string[] GetHeadersFromFile(string path, char delimiter = ',')
         {
             using var reader = new StreamReader(path);
             var line = reader.ReadLine();
-            return line != null ? line.Split(delimiter) : new string[] { };
+            return line != null ? line.Split(delimiter) : [];
         }
 
         /// <summary>
-        /// async returns the headers from a CSV file
+        /// Asynchronously retrieves the header row from a CSV file as an array of column names.
         /// </summary>
-        /// <param name="path"></param>
-        /// <param name="delimiter"></param>
-        /// <returns></returns>
+        /// <param name="path">The file path to the CSV file.</param>
+        /// <param name="delimiter">The character used to separate values in the CSV file. Defaults to ','.</param>
+        /// <returns>A task representing the asynchronous operation, with a result of an array of strings representing the column headers, or an empty array if the file is empty.</returns>
         public static async Task<string[]> GetHeadersFromFileAsync(string path, char delimiter = ',')
         {
             using var reader = new StreamReader(path);
             var line = await reader.ReadLineAsync();
-            return line != null ? line.Split(delimiter) : new string[] { };
+            return line != null ? line.Split(delimiter) : [];
         }
 
         /// <summary>
-        /// returns the headers from a raw CSV string array
+        /// Retrieves the header row from a raw CSV string array as an array of column names.
         /// </summary>
-        /// <param name="csv"></param>
-        /// <param name="delimiter"></param>
-        /// <returns></returns>
+        /// <param name="csv">The array of CSV lines, where the first element is expected to be the header row.</param>
+        /// <param name="delimiter">The character used to separate values in the CSV data. Defaults to ','.</param>
+        /// <returns>An array of strings representing the column headers.</returns>
         public static string[] GetHeadersFromRawCsv(string[] csv, char delimiter = ',')
         {
             return csv[0].Split(delimiter);
