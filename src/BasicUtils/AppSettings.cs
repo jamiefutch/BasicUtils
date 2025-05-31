@@ -18,16 +18,21 @@ using System.Text.Json;
 namespace BasicUtils
 {
     /// <summary>
-    /// Application settings utility class
+    /// Provides utility methods for loading application settings from JSON files.
     /// </summary>
     public static class AppSettings
     {
         /// <summary>
-        /// Loads settings from a json file
+        /// Loads application settings from a JSON file into a dictionary.
         /// </summary>
-        /// <param name="path"></param>
-        /// <returns></returns>
-        public static Dictionary<string,string> LoadSettings(string path)
+        /// <param name="path">The file path to the JSON settings file.</param>
+        /// <returns>
+        /// A <see cref="Dictionary{TKey, TValue}"/> containing the settings as key-value pairs.
+        /// </returns>
+        /// <exception cref="IOException">Thrown if the file cannot be read.</exception>
+        /// <exception cref="JsonException">Thrown if the file content is not valid JSON.</exception>
+        /// <exception cref="Exception">Thrown for other errors during file reading or deserialization.</exception>
+        public static Dictionary<string, string> LoadSettings(string path)
         {
             Dictionary<string, string> settings;
             try
@@ -44,12 +49,17 @@ namespace BasicUtils
         }
 
         /// <summary>
-        /// Loads settings from a json file
+        /// Loads application settings from a JSON file and deserializes them into a strongly-typed object.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="path"></param>
-        /// <param name="settingsType"></param>
-        /// <returns></returns>
+        /// <typeparam name="T">The type to deserialize the settings into.</typeparam>
+        /// <param name="path">The file path to the JSON settings file.</param>
+        /// <param name="settingsType">An instance of the type <typeparamref name="T"/> (not used, but required for method signature compatibility).</param>
+        /// <returns>
+        /// An instance of type <typeparamref name="T"/> containing the deserialized settings.
+        /// </returns>
+        /// <exception cref="IOException">Thrown if the file cannot be read.</exception>
+        /// <exception cref="JsonException">Thrown if the file content is not valid JSON or cannot be deserialized to <typeparamref name="T"/>.</exception>
+        /// <exception cref="Exception">Thrown for other errors during file reading or deserialization.</exception>
         public static T LoadSettings<T>(string path, T settingsType)
         {
             try
