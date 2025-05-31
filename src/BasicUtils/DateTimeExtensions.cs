@@ -15,15 +15,17 @@ using System.Diagnostics;
 namespace BasicUtils
 { 
     /// <summary>
-    /// some semi useful extensions for DateTime
+    /// Provides extension methods for <see cref="DateTime"/> and related types to assist with time formatting and elapsed time calculations.
     /// </summary>
     public static class DateTimeExtensions
     {
         /// <summary>
-        /// gets elapsed time from ticks
+        /// Converts a tick count to a formatted elapsed time string in the format "HH:MM:SS:MS".
         /// </summary>
-        /// <param name="ticks"></param>
-        /// <returns></returns>
+        /// <param name="ticks">The number of ticks representing the elapsed time.</param>
+        /// <returns>
+        /// A string representing the elapsed time in hours, minutes, seconds, and milliseconds (e.g., "01:23:45:67").
+        /// </returns>
         public static string ElapsedTime(this long ticks)
         {
             TimeSpan ts = new TimeSpan(ticks);            
@@ -31,10 +33,12 @@ namespace BasicUtils
         }
 
         /// <summary>
-        /// returns time formatted as HH:MM:SS:MS
+        /// Returns the elapsed time of a <see cref="Stopwatch"/> as a formatted string in the format "HH:MM:SS:MS".
         /// </summary>
-        /// <param name="sw"></param>
-        /// <returns></returns>
+        /// <param name="sw">The <see cref="Stopwatch"/> instance to format the elapsed time for.</param>
+        /// <returns>
+        /// A string representing the elapsed time in hours, minutes, seconds, and milliseconds (e.g., "01:23:45:67").
+        /// </returns>
         public static string TimeFormatted(this Stopwatch sw)
         {
             var ts = sw.Elapsed;
