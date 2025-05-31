@@ -23,43 +23,39 @@ namespace BasicUtils
         /// <summary>
         /// writes a message to a log file
         /// </summary>
-        /// <param name="LogPath"></param>
-        /// <param name="LogMsg"></param>
-        public static void WriteToLog(string LogPath, string LogMsg)
+        /// <param name="logPath"></param>
+        /// <param name="logMsg"></param>
+        public static void WriteToLog(string logPath, string logMsg)
         {
-            string path = LogPath;
+            string path = logPath;
 
-            const string linebreak = "============================================================================";
+            const string linebreak = @"============================================================================";
 
-            string FileName = GetCurrentTimeString() + ".txt";
+            string fileName = GetCurrentTimeString() + ".txt";
 
             if (path.LastIndexOf('\\') != path.Length - 1)
                 path = path += "\\";
 
-            path = path += FileName;
+            path = path += fileName;
 
             if (!File.Exists(path))
             {
                 // Create a file to write to. 
-                using (StreamWriter sw = File.CreateText(path))
-                {
-                    sw.WriteLine(linebreak);
-                    sw.WriteLine(String.Format("{0:MM/dd/yyyy H:m:ss}", DateTime.Now));
-                    sw.WriteLine("");
-                    sw.WriteLine(LogMsg);
-                    sw.WriteLine(linebreak);
-                }
+                using StreamWriter sw = File.CreateText(path);
+                sw.WriteLine(linebreak);
+                sw.WriteLine($"{DateTime.Now:MM/dd/yyyy H:m:ss}");
+                sw.WriteLine("");
+                sw.WriteLine(logMsg);
+                sw.WriteLine(linebreak);
             }
             else
             {
-                using (StreamWriter sw = File.AppendText(path))
-                {
-                    sw.WriteLine(linebreak);
-                    sw.WriteLine(String.Format("{0:MM/dd/yyyy H:m:ss}", DateTime.Now));
-                    sw.WriteLine("");
-                    sw.WriteLine(LogMsg);
-                    sw.WriteLine(linebreak);
-                }
+                using StreamWriter sw = File.AppendText(path);
+                sw.WriteLine(linebreak);
+                sw.WriteLine($"{DateTime.Now:MM/dd/yyyy H:m:ss}");
+                sw.WriteLine("");
+                sw.WriteLine(logMsg);
+                sw.WriteLine(linebreak);
             }
         }
 
@@ -70,7 +66,7 @@ namespace BasicUtils
         private static string GetCurrentTimeString()
         {
             //return String.Format("{0:MMddyyyy_H_mm_ss_ffff}", DateTime.Now);
-            return String.Format("{0:MMddyyyy}", DateTime.Now);
+            return $"{DateTime.Now:MMddyyyy}";
         }
 
     }
