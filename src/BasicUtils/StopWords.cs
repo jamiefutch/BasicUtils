@@ -1,4 +1,5 @@
-﻿/** 
+﻿#pragma warning disable CS1587 // XML comment is not placed on a valid language element
+/** 
 The MIT License (MIT)
 Copyright © 2025 Jamie Futch
 
@@ -44,17 +45,34 @@ using System.Linq;
 
 namespace BasicUtils
 {
+    /// <summary>
+    /// Provides a static list of common English stop words for use in text processing and natural language applications.
+    /// </summary>
+    /// <remarks>
+    /// The stop words list is initialized from a combination of sources, including portions derived from the .NET Foundation under the MIT License.
+    /// This class is intended for internal use and exposes the <see cref="StopWordsList"/> array for filtering or removing stop words from text.
+    /// </remarks>
     internal static class StopWords
     {
+        /// <summary>
+        /// An array of common English stop words.
+        /// </summary>
         public static string[] StopWordsList;
+        
         static StopWords()
         {
             StopWordsList = BuildStopWordsList();
         }
 
+        /// <summary>
+        /// Builds and returns the array of stop words used by <see cref="StopWordsList"/>.
+        /// </summary>
+        /// <returns>
+        /// An array of strings containing common English stop words.
+        /// </returns>
         private static string[] BuildStopWordsList()
         {       
-            string[] sw = new[]
+            var sw = new[]
             {   
                 "a",
                 "about",

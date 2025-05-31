@@ -24,78 +24,103 @@ namespace BasicUtils
     public static class StringExtensions
     {
         /// <summary>
-        /// lazy way to print to console (no line feed)
+        /// Writes the specified string to the console without a line feed.
         /// </summary>
-        /// <param name="output"></param>
-        public static void p(this string output)
+        /// <param name="str">The string to write to the console.</param>
+        public static void p(this string str)
         {
-            Print(output);
+            Print(str, false);
         }
 
         /// <summary>
-        /// lazy way to print to console (with line feed)
+        /// Writes the specified string to the console followed by a line feed.
         /// </summary>
-        /// <param name="output"></param>
-        public static void pl(this string output)
+        /// <param name="str">The string to write to the console.</param>
+        public static void pl(this string str)
         {
-            PrintLine(output);
-        }        
-        
+            PrintLine(str,false);
+        }
+
         /// <summary>
-        /// prints string to console
+        /// Writes the specified string to the console, optionally with a timestamp and in a specified color.
         /// </summary>
-        /// <param name="output"></param>
-        /// <param name="showTimeStamp"></param>
-        /// <param name="textColor"></param>
-        public static void Print(this string output, 
+        /// <param name="str">The string to write to the console.</param>
+        public static void Print(this string str)
+        {
+            Console.Write(str);
+        }
+
+        /// <summary>
+        /// Writes the specified string to the console, optionally with a timestamp and in a specified color.
+        /// </summary>
+        /// <param name="str">The string to write to the console.</param>
+        /// <param name="showTimeStamp">If true, prepends the current timestamp to the output.</param>
+        public static void Print(this string str,
+            bool showTimeStamp = true)
+        {
+            Console.Write(showTimeStamp ? $"{System.DateTime.Now}\t{str}" : $"{str}");
+        }
+
+        /// <summary>
+        /// Writes the specified string to the console, optionally with a timestamp and in a specified color.
+        /// </summary>
+        /// <param name="str">The string to write to the console.</param>
+        /// <param name="showTimeStamp">If true, prepends the current timestamp to the output.</param>
+        /// <param name="textColor">The color to use for the output text.</param>
+        public static void Print(this string str, 
             bool showTimeStamp = true,
             ConsoleColor textColor = ConsoleColor.White)
         {
             var tempColor = Console.ForegroundColor;
             Console.ForegroundColor = textColor;
-            if (showTimeStamp)
-            {
-                Console.Write($"{System.DateTime.Now}\t{output}");
-            }
-            else
-            {
-                Console.Write($"{output}");
-            }
-
+            Console.Write(showTimeStamp ? $"{System.DateTime.Now}\t{str}" : $"{str}");
             Console.ForegroundColor = tempColor;
         }
 
 
         /// <summary>
-        /// Prints string to console 
+        /// Writes the specified string to the console followed by a line feed, optionally prepending the current timestamp.
         /// </summary>
-        /// <param name="output"></param>
-        /// <param name="showTimeStamp"></param>
-        /// <param name="textColor"></param>
-        // ReSharper disable once MemberCanBePrivate.Global
-        public static void PrintLine(this string output,
+        /// <param name="str">The string to write to the console.</param>
+        public static void PrintLine(this string str)
+        {
+            Console.WriteLine(str);
+        }
+
+        /// <summary>
+        /// Writes the specified string to the console followed by a line feed, optionally prepending the current timestamp.
+        /// </summary>
+        /// <param name="str">The string to write to the console.</param>
+        /// <param name="showTimeStamp">If true, prepends the current timestamp to the output.</param>
+        public static void PrintLine(this string str,
+            bool showTimeStamp = true)
+        {
+            Console.WriteLine(showTimeStamp ? $"{System.DateTime.Now}\t{str}" : $"{str}");
+        }
+
+        // ReSharper disable once MethodOverloadWithOptionalParameter
+        /// <summary>
+        /// Writes the specified string to the console followed by a line feed.
+        /// </summary>
+        /// <param name="str">The string to write to the console.</param>
+        /// <param name="showTimeStamp">If true, prepends the current timestamp to the output.</param>
+        /// <param name="textColor">The color to use for the output text.</param>
+        public static void PrintLine(this string str,
             bool showTimeStamp = true,
             ConsoleColor textColor = ConsoleColor.White)
         {
             var tempColor = Console.ForegroundColor;
             Console.ForegroundColor = textColor;
-            if (showTimeStamp)
-            {
-                Console.WriteLine($"{System.DateTime.Now}\t{output}");
-            }
-            else
-            {
-                Console.WriteLine($"{output}");
-            }
-
+            Console.WriteLine(showTimeStamp ? $"{System.DateTime.Now}\t{str}" : $"{str}");
             Console.ForegroundColor = tempColor;
         }
 
+
         /// <summary>
-        /// displays a prompt or a default press any key prompt then waits for any key press
+        /// Displays a prompt or a default "Press any key to continue..." message, then waits for a key press.
         /// </summary>
-        /// <param name="prompt"></param>
-        /// <param name="showTimeStamp"></param>
+        /// <param name="prompt">The prompt to display. If empty, a default message is shown.</param>
+        /// <param name="showTimeStamp">If true, prepends the current timestamp to the prompt.</param>
         public static void PressAnyKey(this string prompt, 
             bool showTimeStamp = true)
         {
@@ -118,12 +143,12 @@ namespace BasicUtils
         }
 
         /// <summary>
-        /// prints a line and accepts inupt from the user.  Returns the input as a string
+        /// Writes a prompt to the console and reads input from the user, returning the input as a string.
         /// </summary>
-        /// <param name="inputPrompt"></param>
-        /// <param name="showTimeStamp"></param>
-        /// <param name="textColor"></param>
-        /// <returns></returns>
+        /// <param name="inputPrompt">The prompt to display to the user.</param>
+        /// <param name="showTimeStamp">If true, prepends the current timestamp to the prompt.</param>
+        /// <param name="textColor">The color to use for the prompt text.</param>
+        /// <returns>The user's input as a string.</returns>
         public static string PrintForInput(this string inputPrompt, 
             bool showTimeStamp = false,
             ConsoleColor textColor = ConsoleColor.White)
@@ -140,15 +165,14 @@ namespace BasicUtils
             return output.Replace(inputPrompt, "");
         }
 
-        
         /// <summary>
-        /// not implemented
+        /// Not implemented. Intended to read input from the user with a prompt.
         /// </summary>
-        /// <param name="inputPrompt"></param>
-        /// <param name="showTimeStamp"></param>
-        /// <param name="textColor"></param>
-        /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
+        /// <param name="inputPrompt">The prompt to display to the user.</param>
+        /// <param name="showTimeStamp">If true, prepends the current timestamp to the prompt.</param>
+        /// <param name="textColor">The color to use for the prompt text.</param>
+        /// <returns>The user's input as a string.</returns>
+        /// <exception cref="NotImplementedException">Always thrown.</exception>
         public static string Input(this string inputPrompt,
             bool showTimeStamp = false,
             ConsoleColor textColor = ConsoleColor.White)
@@ -156,13 +180,11 @@ namespace BasicUtils
             throw new NotImplementedException();
         }
 
-
         /// <summary>
-        /// removes punctuation and end of lines from string
+        /// Removes all punctuation characters from the string.
         /// </summary>
-        /// <param name="text"></param>
-        /// <param name="replacement"></param>
-        /// <returns></returns>
+        /// <param name="text">The string to process.</param>
+        /// <returns>A new string with punctuation removed.</returns>
         public static string RemovePunctuation(this string text)
         {
             var result = new StringBuilder(text.Length);
@@ -177,11 +199,10 @@ namespace BasicUtils
         }
 
         /// <summary>
-        /// removes ascii symbols from string
+        /// Removes all ASCII symbol characters from the string, leaving only letters, digits, and whitespace.
         /// </summary>
-        /// <param name="text"></param>
-        /// <param name="replacement"></param>
-        /// <returns></returns>
+        /// <param name="text">The string to process.</param>
+        /// <returns>A new string with symbols removed.</returns>
         public static string RemoveSymbols(this string text)
         {
             var result = new StringBuilder(text.Length);
@@ -196,11 +217,10 @@ namespace BasicUtils
         }
 
         /// <summary>
-        /// removes numbers from string
+        /// Removes all numeric digits from the string.
         /// </summary>
-        /// <param name="text"></param>
-        /// <param name="replacement"></param>
-        /// <returns></returns>
+        /// <param name="text">The string to process.</param>
+        /// <returns>A new string with numbers removed.</returns>
         public static string RemoveNumbers(this string text)
         {
             var result = new StringBuilder(text.Length);
@@ -215,35 +235,33 @@ namespace BasicUtils
         }
 
         /// <summary>
-        /// remove multiple spaces from string
-        /// replaces with replacement value
+        /// Replaces multiple consecutive spaces in the string with a single replacement value.
         /// </summary>
-        /// <param name="text"></param>
-        /// <param name="replacement"></param>
-        /// <returns></returns>
+        /// <param name="text">The string to process.</param>
+        /// <param name="replacement">The string to replace multiple spaces with. Defaults to a single space.</param>
+        /// <returns>A new string with multiple spaces replaced.</returns>
         public static string RemoveMultipleSpaces(this string text, string replacement = " ")
         {
-            var words = text.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            var words = text.Split([' '], StringSplitOptions.RemoveEmptyEntries);
             return string.Join(replacement, words);
         }
 
         /// <summary>
-        /// remove tabs from string
-        /// replaces with replacement value
+        /// Replaces all tab characters in the string with the specified replacement value.
         /// </summary>
-        /// <param name="text"></param>
-        /// <param name="replacement"></param>
-        /// <returns></returns>
+        /// <param name="text">The string to process.</param>
+        /// <param name="replacement">The string to replace tabs with. Defaults to a single space.</param>
+        /// <returns>A new string with tabs replaced.</returns>
         public static string RemoveTabs(this string text, string replacement = " ")
         {
             return text.Replace("\t", replacement);
         }
 
         /// <summary>
-        /// removes stop words from string
+        /// Removes stop words from the string using a predefined stop words list.
         /// </summary>
-        /// <param name="text"></param>
-        /// <returns></returns>
+        /// <param name="text">The string to process.</param>
+        /// <returns>A new string with stop words removed.</returns>
         public static string RemoveStopWords(this string text)
         {
             var words = text.Split(' ');
@@ -253,24 +271,21 @@ namespace BasicUtils
         }
 
         /// <summary>
-        /// repeats a string n times
+        /// Repeats the string a specified number of times.
         /// </summary>
-        /// <param name="text"></param>
-        /// <param name="count"></param>
-        /// <returns></returns>
+        /// <param name="text">The string to repeat.</param>
+        /// <param name="count">The number of times to repeat the string.</param>
+        /// <returns>A new string consisting of the original string repeated the specified number of times.</returns>
         public static string Repeat(this string text, int count)
         {
             return string.Concat(Enumerable.Repeat(text, count));
         }
 
         /// <summary>
-        /// Generates a random string of the specified length.
+        /// Generates a random string of the specified length, optionally including special characters.
         /// </summary>
         /// <param name="length">The length of the random string to generate.</param>
-        /// <param name="includeSpecialCharacters">
-        /// A boolean value indicating whether the generated string should include special characters.
-        /// If <c>true</c>, special characters will be included; otherwise, only alphanumeric characters will be used.
-        /// </param>
+        /// <param name="includeSpecialCharacters">If true, includes special characters in the generated string; otherwise, only alphanumeric characters are used.</param>
         /// <returns>A randomly generated string of the specified length.</returns>
         static string CreateRandomString(int length, bool includeSpecialCharacters = false)
         {

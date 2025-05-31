@@ -1,0 +1,7 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path="changelog.txt" />
+  </Folder>
+  <Project Path="BasicUtils/BasicUtils.csproj" />
+  <Project Path="BasicUtilsTest/BasicUtilsTest.csproj" />
+</Solution>
