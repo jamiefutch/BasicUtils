@@ -2,6 +2,15 @@
 
 A few basic console and text utilities for .NET, useful for development and prototyping.
 
+---
+
+**.NET Target:** .NET 8, .NET 9  
+**C# Version:** 12.0
+
+---
+
+For more details, see the XML documentation in each source file.
+
 ## Installationdotnet add package BasicUtilsor, using nuget...Install-Package BasicUtils
 
 
@@ -105,7 +114,10 @@ The `Csv` class provides support for simple CSV operations.
 
 ## MlTools
 
-### MlTools
+### MlTools Usage
+
+- `var ngrams = MlTools.GetNgramsFromString("the quick brown fox", 2); // ["the|quick", "quick|brown", "brown|fox"]`
+
 
 Basic machine learning tools:
 
@@ -118,7 +130,9 @@ Basic machine learning tools:
 
 ## AppSettings
 
-### AppSettings
+### AppSettings Usage
+- `var settings = AppSettings.LoadSettings("appsettings.json"); var typedSettings = AppSettings.LoadSettings<MySettings>("appsettings.json", new MySettings());`
+
 
 Utility methods for loading settings from a JSON file:
 
@@ -129,9 +143,16 @@ Utility methods for loading settings from a JSON file:
 - `T LoadSettings<T>(string path, T settingsType)`: This is a generic method that loads settings from a JSON file. The settings are deserialized into an object of type `T`. The `path` parameter specifies the path to the JSON file, and the `settingsType` parameter is an instance of the `T` type that specifies the type to which the settings should be deserialized.
 
 
-### Math
+## Math
+Fast modulo operation for large loops
 
-Fast modulo operation for large loops:
+## ObjectExtensions
+Extension methods for object manipulation:
+
+### Usage
+- `bool isInt = ObjectUtils.IsInt("123"); // true string typeName = ObjectUtils.GetTypeName(123.45); // "double"`
+
+
 
 ### LicenseThe MIT License ~(MIT)
 Copyright Jamie Futch
@@ -140,4 +161,4 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
-THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+    THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
