@@ -13,6 +13,7 @@ using System;
 using System.Globalization;
 using System.Linq;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 
 namespace BasicUtils
@@ -356,6 +357,7 @@ namespace BasicUtils
         /// <exception cref="ArgumentOutOfRangeException">
         /// Thrown if <paramref name="length"/> is less than zero.
         /// </exception>
+        [SuppressMessage("ReSharper", "StringLiteralTypo")]
         static string CreateRandomString(int length, 
             RandomStringSettings settings = RandomStringSettings.AlphaNumericSpecialWithSpaces)
         {
