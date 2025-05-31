@@ -15,59 +15,78 @@ using System.IO;
 namespace BasicUtils
 {
     /// <summary>
-    /// very basic logging class
+    /// Provides basic file-based logging functionality for writing messages to log files.
     /// </summary>
     public static class LogFile
     {
-
         /// <summary>
-        /// writes a message to a log file
+        /// Writes a log message to a file in the specified directory. 
+        /// The log file is named with the current date in "MMddyyyy.txt" format. 
+        /// Each log entry is separated by a line of equal signs and includes a timestamp.
         /// </summary>
-        /// <param name="logPath"></param>
-        /// <param name="logMsg"></param>
+        /// <param name="logPath">The directory path where the log file will be created or appended.</param>
+        /// <param name="logMsg">The message to write to the log file.</param>
+        /// <remarks>
+        /// If the specified directory does not end with a backslash, one is automatically added.
+        /// If the log file for the current date does not exist, it is created; otherwise, the message is appended.
+        /// </remarks>
+        /// <exception cref="ArgumentException">Thrown if <paramref name="logPath"/> is null or empty.</exception>
+        /// <exception cref="IOException">Thrown if the file cannot be created or written to.</exception>
         public static void WriteToLog(string logPath, string logMsg)
         {
-            string path = logPath;
+            if (string.IsNullOrWhiteSpace(logPath))
+            {
+                throw new ArgumentException("Log path cannot be null or empty.", nameof(logPath));
+            }
 
             const string linebreak = @"============================================================================";
 
             string fileName = GetCurrentTimeString() + ".txt";
 
-            if (path.LastIndexOf('\\') != path.Length - 1)
-                path = path += "\\";
-
-            path = path += fileName;
-
-            if (!File.Exists(path))
+            if (!logPath.EndsWith("\\"))
             {
-                // Create a file to write to. 
-                using StreamWriter sw = File.CreateText(path);
-                sw.WriteLine(linebreak);
-                sw.WriteLine($"{DateTime.Now:MM/dd/yyyy H:m:ss}");
-                sw.WriteLine("");
-                sw.WriteLine(logMsg);
-                sw.WriteLine(linebreak);
+                logPath += "\\";
             }
-            else
+
+            string fullPath = logPath + fileName;
+
+            try
             {
-                using StreamWriter sw = File.AppendText(path);
-                sw.WriteLine(linebreak);
-                sw.WriteLine($"{DateTime.Now:MM/dd/yyyy H:m:ss}");
-                sw.WriteLine("");
-                sw.WriteLine(logMsg);
-                sw.WriteLine(linebreak);
+                if (!File.Exists(fullPath))
+                {
+                    // Create a file to write to. 
+                    using StreamWriter sw = File.CreateText(fullPath);
+                    sw.WriteLine(linebreak);
+                    sw.WriteLine($"{DateTime.Now:MM/dd/yyyy H:m:ss}");
+                    sw.WriteLine("");
+                    sw.WriteLine(logMsg);
+                    sw.WriteLine(linebreak);
+                }
+                else
+                {
+                    using StreamWriter sw = File.AppendText(fullPath);
+                    sw.WriteLine(linebreak);
+                    sw.WriteLine($"{DateTime.Now:MM/dd/yyyy H:m:ss}");
+                    sw.WriteLine("");
+                    sw.WriteLine(logMsg);
+                    sw.WriteLine(linebreak);
+                }
+            }
+            catch (IOException ex)
+            {
+                throw new IOException("An error occurred while writing to the log file.", ex);
             }
         }
 
         /// <summary>
-        /// gets the current time as a string in the format MMddyyyy
+        /// Gets the current date as a string in the format "MMddyyyy".
         /// </summary>
-        /// <returns></returns>
+        /// <returns>
+        /// A string representing the current date in "MMddyyyy" format.
+        /// </returns>
         private static string GetCurrentTimeString()
         {
-            //return String.Format("{0:MMddyyyy_H_mm_ss_ffff}", DateTime.Now);
             return $"{DateTime.Now:MMddyyyy}";
         }
-
     }
 }
