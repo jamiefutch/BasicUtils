@@ -14,18 +14,18 @@ using System;
 namespace BasicUtils
 {
     /// <summary>
-    /// console extensions
+    /// Provides extension methods for managing and manipulating console colors.
     /// </summary>
     public static class ConsoleExtensions
     {
-        private static ConsoleColor _cachedBgColor = Console.BackgroundColor;
+        private static readonly ConsoleColor _cachedBgColor = Console.BackgroundColor;
         private static ConsoleColor _cachedForeColor = Console.ForegroundColor;
         
         private static ConsoleColor _bgColor;
         private static ConsoleColor _foreColor;
 
         /// <summary>
-        /// cahce forground color for later restoration
+        /// Caches the current foreground color of the console for later restoration.
         /// </summary>
         public static void CacheForeColor()
         {
@@ -33,7 +33,7 @@ namespace BasicUtils
         }
         
         /// <summary>
-        /// cache background color for later restoration
+        /// Caches the current background color of the console for later restoration.
         /// </summary>
         public static void CacheBgColor()
         {
@@ -41,7 +41,7 @@ namespace BasicUtils
         }
         
         /// <summary>
-        /// restore forground color to cached value
+        /// Restores the console's foreground color to the previously cached value.
         /// </summary>
         public static void RestoreCachedForeColor()
         {
@@ -50,7 +50,7 @@ namespace BasicUtils
         }
         
         /// <summary>
-        /// restore background color to cached value
+        /// Restores the console's background color to the previously cached value.
         /// </summary>
         public static void RestoreCachedBgColor()
         {
@@ -59,9 +59,9 @@ namespace BasicUtils
         }
 
         /// <summary>
-        /// set background color
+        /// Sets the console's background color to the specified value.
         /// </summary>
-        /// <param name="color"></param>
+        /// <param name="color">The <see cref="ConsoleColor"/> to set as the background color.</param>
         public static void SetBgColor(ConsoleColor color)
         {
             _bgColor = color;
@@ -69,9 +69,9 @@ namespace BasicUtils
         }
         
         /// <summary>
-        /// set forground color
+        /// Sets the console's foreground color to the specified value.
         /// </summary>
-        /// <param name="color"></param>
+        /// <param name="color">The <see cref="ConsoleColor"/> to set as the foreground color.</param>
         public static void SetForeColor(ConsoleColor color)
         {
             _foreColor = color;
