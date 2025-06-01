@@ -327,7 +327,7 @@ namespace BasicUtils
         /// <param name="includeSpecialCharacters">If true, includes special characters in the generated string; otherwise, only alphanumeric characters are used.</param>
         /// <returns>A randomly generated string of the specified length.</returns>
         [Obsolete]
-        static string CreateRandomString(int length, bool includeSpecialCharacters = false)
+        public static string CreateRandomString(int length, bool includeSpecialCharacters = false)
         {
             // ReSharper disable once StringLiteralTypo
             string chars;
@@ -358,7 +358,7 @@ namespace BasicUtils
         /// Thrown if <paramref name="length"/> is less than zero.
         /// </exception>
         [SuppressMessage("ReSharper", "StringLiteralTypo")]
-        static string CreateRandomString(int length, 
+        public static string CreateRandomString(int length, 
             RandomStringSettings settings = RandomStringSettings.AlphaNumericSpecialWithSpaces)
         {
             string chars;
