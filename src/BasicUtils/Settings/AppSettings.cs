@@ -15,6 +15,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
 
+// ReSharper disable once CheckNamespace
 namespace BasicUtils
 {
     /// <summary>
@@ -32,6 +33,7 @@ namespace BasicUtils
         /// <exception cref="IOException">Thrown if the file cannot be read.</exception>
         /// <exception cref="JsonException">Thrown if the file content is not valid JSON.</exception>
         /// <exception cref="Exception">Thrown for other errors during file reading or deserialization.</exception>
+        [Obsolete("Use Settings.Application.Dictionary")]
         public static Dictionary<string, string> LoadSettings(string path)
         {
             Dictionary<string, string> settings;
@@ -60,6 +62,7 @@ namespace BasicUtils
         /// <exception cref="IOException">Thrown if the file cannot be read.</exception>
         /// <exception cref="JsonException">Thrown if the file content is not valid JSON or cannot be deserialized to <typeparamref name="T"/>.</exception>
         /// <exception cref="Exception">Thrown for other errors during file reading or deserialization.</exception>
+        [Obsolete("Use Settings.Application.LoadSettings")]
         public static T LoadSettings<T>(string path, T settingsType)
         {
             try

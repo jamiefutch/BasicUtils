@@ -52,17 +52,40 @@ namespace BasicUtils
     /// The stop words list is initialized from a combination of sources, including portions derived from the .NET Foundation under the MIT License.
     /// This class is intended for internal use and exposes the <see cref="StopWordsList"/> array for filtering or removing stop words from text.
     /// </remarks>
-    internal static class StopWords
+    public class StopWords : IDisposable
     {
+    
         /// <summary>
         /// An array of common English stop words.
         /// </summary>
         public static string[] StopWordsList;
         
-        static StopWords()
+        /// <summary>
+        /// Initializes a new instance of the <see cref="StopWords"/> class.
+        /// </summary>
+        /// <remarks>
+        /// This constructor initializes the <see cref="StopWordsList"/> array by invoking the internal method <c>BuildStopWordsList</c>.
+        /// </remarks>
+        public StopWords()
         {
             StopWordsList = BuildStopWordsList();
         }
+
+        /// <summary>
+        /// Retrieves the list of common English stop words.
+        /// </summary>
+        /// <returns>
+        /// An array of strings containing the stop words.
+        /// </returns>
+        /// <remarks>
+        /// This method provides access to the static <see cref="StopWordsList"/> array, 
+        /// which is initialized during the construction of the <see cref="StopWords"/> instance.
+        /// </remarks>
+        public string[] GetStopWordsList()
+        {
+            return StopWordsList;
+        }
+
 
         /// <summary>
         /// Builds and returns the array of stop words used by <see cref="StopWordsList"/>.
@@ -389,6 +412,14 @@ namespace BasicUtils
                 "would"
             };
             return sw.ToArray();
-        }       
+        }
+
+        /// <summary>
+        /// Disposes of the <see cref="StopWords"/> instance, releasing any resources if necessary.
+        /// </summary>
+        public void Dispose()
+        {
+            StopWordsList = null; // Clear the stop words list to free memory
+        }
     }           
 }               

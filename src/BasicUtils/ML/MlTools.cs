@@ -32,6 +32,7 @@ namespace BasicUtils
         /// <returns>
         /// A list of unique n-gram strings, or an empty list if no n-grams are found.
         /// </returns>
+        [Obsolete("Use ML.MlUtils.GetNgramsFromString")]
         public static List<string> GetNgramsFromString(string text, int length)
         {
             text = text.RemovePunctuation().RemoveSymbols().RemoveMultipleSpaces().Trim();
@@ -65,6 +66,7 @@ namespace BasicUtils
         /// A task representing the asynchronous operation, with a result of a list of unique n-gram strings,
         /// or an empty list if no n-grams are found.
         /// </returns>
+        [Obsolete("Use ML.MlUtils.GetNgramsFromStringAsync")]
         public static async Task<List<string>> GetNgramsFromStringAsync(string text, int length)
         {
             return await Task.Run(() =>

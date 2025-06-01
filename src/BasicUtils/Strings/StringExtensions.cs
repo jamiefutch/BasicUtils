@@ -16,6 +16,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
 
+// ReSharper disable once CheckNamespace
 namespace BasicUtils
 {
     /// <summary>
@@ -357,6 +358,7 @@ namespace BasicUtils
         /// <exception cref="ArgumentOutOfRangeException">
         /// Thrown if <paramref name="length"/> is less than zero.
         /// </exception>
+        [Obsolete ("Use Strings.StringUtils.CreateRandomString instead")]
         [SuppressMessage("ReSharper", "StringLiteralTypo")]
         public static string CreateRandomString(int length, 
             RandomStringSettings settings = RandomStringSettings.AlphaNumericSpecialWithSpaces)
