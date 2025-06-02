@@ -36,13 +36,13 @@ The `StringExtensions` class provides a variety of extension methods for string 
 To use these methods, add `using BasicUtils;` to your file.
 
 ### Console Output
-`"Hello, World!".p(); // Prints to console without a line feed` 
-`"Hello, World!".pl(); // Prints to console with a line feed`
-`"Hello, World!".Print(); // Prints with timestamp (default)` 
-`"Hello, World!".Print(showTimeStamp: false, textColor: ConsoleColor.Green); // Prints in green, no timestamp`
-`"Hello, World!".PrintLine(); // Prints with line feed and timestamp (default)` 
-`"Hello, World!".PrintLine(showTimeStamp: false); // Prints with line feed, no timestamp` 
-`"Hello, World!".PrintLine(showTimeStamp: true, textColor: ConsoleColor.Yellow); // Prints in yellow with timestamp` 
+`"Hello, World!".p(); // Prints to console without a line feed 
+"Hello, World!".pl(); // Prints to console with a line feed
+"Hello, World!".Print(); // Prints with timestamp (default) 
+"Hello, World!".Print(showTimeStamp: false, textColor: ConsoleColor.Green); // Prints in green, no timestamp
+"Hello, World!".PrintLine(); // Prints with line feed and timestamp (default) 
+"Hello, World!".PrintLine(showTimeStamp: false); // Prints with line feed, no timestamp 
+"Hello, World!".PrintLine(showTimeStamp: true, textColor: ConsoleColor.Yellow); // Prints in yellow with timestamp` 
 
 
 ### User Input
