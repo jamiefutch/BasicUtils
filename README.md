@@ -36,7 +36,7 @@ The `StringExtensions` class provides a variety of extension methods for string 
 To use these methods, add `using BasicUtils;` to your file.
 
 ### Console Output
-`
+```
 "Hello, World!".p(); // Prints to console without a line feed 
 "Hello, World!".pl(); // Prints to console with a line feed
 "Hello, World!".Print(); // Prints with timestamp (default) 
@@ -44,19 +44,23 @@ To use these methods, add `using BasicUtils;` to your file.
 "Hello, World!".PrintLine(); // Prints with line feed and timestamp (default) 
 "Hello, World!".PrintLine(showTimeStamp: false); // Prints with line feed, no timestamp 
 "Hello, World!".PrintLine(showTimeStamp: true, textColor: ConsoleColor.Yellow); // Prints in yellow with timestamp
-` 
+```
 
 
 ### User Input
-`"Press any key to continue...".PressAnyKey(); // Shows prompt and waits for key press`
-`string name = "Enter your name: ".PrintForInput(); // Prompts and reads user input`
+```
+"Press any key to continue...".PressAnyKey(); // Shows prompt and waits for key press
+string name = "Enter your name: ".PrintForInput(); // Prompts and reads user input
+```
 
 ### String Cleaning
-`string cleaned = "Hello, 123!".RemoveNumbers(); // "Hello, !"` 
-`string noPunct = "Hello, world!".RemovePunctuation(); // "Hello world"` 
-`string noSymbols = "A+B=C!".RemoveSymbols(); // "ABC"`
-`string noTabs = "Hello\tWorld".RemoveTabs(); // "Hello World"` 
-`string singleSpaced = "A   B   C".RemoveMultipleSpaces(); // "A B C"`
+```
+string cleaned = "Hello, 123!".RemoveNumbers(); // "Hello, !" 
+string noPunct = "Hello, world!".RemovePunctuation(); // "Hello world" 
+string noSymbols = "A+B=C!".RemoveSymbols(); // "ABC"
+string noTabs = "Hello\tWorld".RemoveTabs(); // "Hello World" 
+string singleSpaced = "A   B   C".RemoveMultipleSpaces(); // "A B C"
+```
 
 ### Stop Words
 `string filtered = "this is a test of the system".RemoveStopWords(); // "test system"`
@@ -65,9 +69,11 @@ To use these methods, add `using BasicUtils;` to your file.
 `string repeated = "abc".Repeat(3); // "abcabcabc"`
 
 ### Random String Generation
-`// (Assuming you expose a public method for random string generation)` 
-`string randomAlpha = StringExtensions.CreateRandomString(10, StringExtensions.RandomStringSettings.AlphaOnly);` 
-`string randomAll = StringExtensions.CreateRandomString(16, StringExtensions.RandomStringSettings.AlphaNumericSpecialWithSpaces);`
+```
+// (Assuming you expose a public method for random string generation) 
+string randomAlpha = StringExtensions.CreateRandomString(10, StringExtensions.RandomStringSettings.AlphaOnly); 
+string randomAll = StringExtensions.CreateRandomString(16, StringExtensions.RandomStringSettings.AlphaNumericSpecialWithSpaces);
+```
 
 > **Note:** Some random string generation methods may be internal or obsolete; use the recommended public API.
 
