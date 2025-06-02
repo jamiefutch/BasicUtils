@@ -11,31 +11,47 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
 **/
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
-namespace BasicUtils
+namespace BasicUtils.MenuTools;
+
+/// <summary>
+/// menu items
+/// </summary>
+public class MenuItem : IDisposable
 {
-    public static class Math
+    /// <summary>
+    /// menu item id
+    /// </summary>
+    public string id { get; set; }
+        
+    /// <summary>
+    /// menu item title
+    /// </summary>
+    public string title { get; set; }
+
+    /// <summary>
+    /// concats menu item id and title to a string for display
+    /// </summary>
+    /// <returns></returns>
+    public override string ToString()
     {
-        /// <summary>
-        /// A fast modulo operation for large loops
-        ///
-        /// this is equivalent to (limitcount % limit) == 0, only a bit faster.
-        /// usage:
-        ///     where limitcount is the current loop count,
-        ///     and limit is the modulo limit
-        ///     if(Math.FastModForLoop(limitcount, limit))
-        ///     {then do something}
-        /// </summary>
-        /// <param name="limitcount">the current loop count</param>
-        /// <param name="limit">the limit of the modulo</param>
-        /// <returns></returns>
-        // ReSharper disable once IdentifierTypo
-        public static bool FastModForLoop(long limitcount, long limit)
-        {
-            return (bool)(limitcount > (limit - 1));
-        }
+        return $"{id}\t{ title}";
+    }
+
+    /// <summary>
+    /// Releases all resources used by the <see cref="MenuItem"/> instance.
+    /// </summary>
+    /// <remarks>
+    /// This method cleans up any resources associated with the <see cref="MenuItem"/> instance,
+    /// such as resetting the <see cref="id"/> and <see cref="title"/> properties to <c>null</c>.
+    /// It also suppresses finalization for this object.
+    /// </remarks>
+    public void Dispose()
+    {
+        // Clean up any resources used by the MenuItem instance
+        id = null;
+        title = null;
+        GC.SuppressFinalize(this);
     }
 }

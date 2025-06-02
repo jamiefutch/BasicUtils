@@ -1,5 +1,5 @@
 ﻿#pragma warning disable CS1587 // XML comment is not placed on a valid language element
-/** 
+/**
 The MIT License (MIT)
 Copyright © 2025 Jamie Futch
 
@@ -10,24 +10,28 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 **/
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace BasicUtils
+namespace BasicUtils.ConsoleUtils
 {
     /// <summary>
     /// Provides extension methods for managing and manipulating console colors.
     /// </summary>
-    public static class ConsoleExtensions
+    public class ConsoleUtils : IDisposable
     {
+        // ReSharper disable once InconsistentNaming
         private static readonly ConsoleColor _cachedBgColor = System.Console.BackgroundColor;
         private static ConsoleColor _cachedForeColor = System.Console.ForegroundColor;
-        
+
         private static ConsoleColor _bgColor;
         private static ConsoleColor _foreColor;
 
         /// <summary>
         /// Caches the current foreground color of the console for later restoration.
         /// </summary>
-        [Obsolete("Use ConsoleUtils.ConsoleUtils.CacheForeColor")]
         public static void CacheForeColor()
         {
             _cachedForeColor = System.Console.ForegroundColor;
@@ -36,7 +40,6 @@ namespace BasicUtils
         /// <summary>
         /// Caches the current background color of the console for later restoration.
         /// </summary>
-        [Obsolete("Use ConsoleUtils.ConsoleUtils.CacheBgColor")]
         public static void CacheBgColor()
         {
             _cachedForeColor = System.Console.BackgroundColor;
@@ -45,7 +48,6 @@ namespace BasicUtils
         /// <summary>
         /// Restores the console's foreground color to the previously cached value.
         /// </summary>
-        [Obsolete("Use ConsoleUtils.ConsoleUtils.RestoreCachedForeColor")]
         public static void RestoreCachedForeColor()
         {
             System.Console.ForegroundColor = _cachedForeColor;
@@ -55,7 +57,6 @@ namespace BasicUtils
         /// <summary>
         /// Restores the console's background color to the previously cached value.
         /// </summary>
-        [Obsolete("Use ConsoleUtils.ConsoleUtils.RestoreCachedBgColor")]
         public static void RestoreCachedBgColor()
         {
             System.Console.BackgroundColor = _cachedBgColor;
@@ -66,7 +67,6 @@ namespace BasicUtils
         /// Sets the console's background color to the specified value.
         /// </summary>
         /// <param name="color">The <see cref="ConsoleColor"/> to set as the background color.</param>
-        [Obsolete("Use ConsoleUtils.ConsoleUtils.SetBgColor")]
         public static void SetBgColor(ConsoleColor color)
         {
             _bgColor = color;
@@ -77,11 +77,15 @@ namespace BasicUtils
         /// Sets the console's foreground color to the specified value.
         /// </summary>
         /// <param name="color">The <see cref="ConsoleColor"/> to set as the foreground color.</param>
-        [Obsolete("Use ConsoleUtils.ConsoleUtils.SetForColor")]
         public static void SetForeColor(ConsoleColor color)
         {
             _foreColor = color;
             System.Console.ForegroundColor = color;
+        }
+
+
+        public void Dispose()
+        {
         }
     }
 }

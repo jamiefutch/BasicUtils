@@ -2,11 +2,14 @@ using Xunit;
 using BasicUtils;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using BasicUtils.MLTools;
 
 namespace BasicUtilsTest
 {
     public class MlToolsTests
     {
+        private readonly MlUtils _mlUtils = new();
+
         [Fact]
         public void GetNgramsFromString_ShouldReturnCorrectNgrams()
         {
@@ -15,7 +18,7 @@ namespace BasicUtilsTest
             int ngramLength = 2;
 
             // Act
-            var result = MlTools.GetNgramsFromString(input, ngramLength);
+            var result = _mlUtils.GetNgramsFromString(input, ngramLength);
 
             // Assert
             var expected = new List<string> { "This|is", "is|a", "a|test" };
@@ -30,7 +33,7 @@ namespace BasicUtilsTest
             int ngramLength = 2;
 
             // Act
-            var result = MlTools.GetNgramsFromString(input, ngramLength);
+            var result = _mlUtils.GetNgramsFromString(input, ngramLength);
 
             // Assert
             Assert.Empty(result);
@@ -44,7 +47,7 @@ namespace BasicUtilsTest
             int ngramLength = 2;
 
             // Act
-            var result = MlTools.GetNgramsFromString(input, ngramLength);
+            var result = _mlUtils.GetNgramsFromString(input, ngramLength);
 
             // Assert
             Assert.Empty(result);
@@ -58,7 +61,7 @@ namespace BasicUtilsTest
             int ngramLength = 2;
 
             // Act
-            var result = await MlTools.GetNgramsFromStringAsync(input, ngramLength);
+            var result = await _mlUtils.GetNgramsFromStringAsync(input, ngramLength);
 
             // Assert
             var expected = new List<string> { "Async|test", "test|case" };
@@ -73,7 +76,7 @@ namespace BasicUtilsTest
             int ngramLength = 2;
 
             // Act
-            var result = await MlTools.GetNgramsFromStringAsync(input, ngramLength);
+            var result = await _mlUtils.GetNgramsFromStringAsync(input, ngramLength);
 
             // Assert
             Assert.Empty(result);

@@ -11,32 +11,31 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
 **/
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
-namespace BasicUtils.Menus
+// ReSharper disable once CheckNamespace
+namespace BasicUtils;
+
+public static class Math
 {
     /// <summary>
-    /// menu items
+    /// A fast modulo operation for large loops
+    ///
+    /// this is equivalent to (limitcount % limit) == 0, only a bit faster.
+    /// usage:
+    ///     where limitcount is the current loop count,
+    ///     and limit is the modulo limit
+    ///     if(Math.FastModForLoop(limitcount, limit))
+    ///     {then do something}
     /// </summary>
-    public class MenuItem
+    /// <param name="limitcount">the current loop count</param>
+    /// <param name="limit">the limit of the modulo</param>
+    /// <returns></returns>
+    // ReSharper disable once IdentifierTypo
+    public static bool FastModForLoop(long limitcount, long limit)
     {
-        /// <summary>
-        /// menu item id
-        /// </summary>
-        public string id { get; set; }
-        
-        /// <summary>
-        /// menu item title
-        /// </summary>
-        public string title { get; set; }
-
-        /// <summary>
-        /// concats menu item id and title to a string for display
-        /// </summary>
-        /// <returns></returns>
-        public override string ToString()
-        {
-            return $"{id}\t{ title}";
-        }
+        return (bool)(limitcount > (limit - 1));
     }
 }

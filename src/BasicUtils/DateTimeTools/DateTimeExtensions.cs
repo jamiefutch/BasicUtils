@@ -12,6 +12,7 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
 using System;
 using System.Diagnostics;
 
+// ReSharper disable once CheckNamespace
 namespace BasicUtils
 { 
     /// <summary>
