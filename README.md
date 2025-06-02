@@ -7,17 +7,19 @@ BasicUtils is designed to simplify common programming tasks such as string manip
 
 ## Project Organization
 
-- **BasicUtils**
-  - `StringExtensions` – String manipulation, console output helpers, random string generation, and input utilities.
-  - `ConsoleExtensions` – Console color management (cache, restore, set).
-  - `Csv` – Synchronous and asynchronous CSV file loading, saving, and header extraction.
-  - `AppSettings` – Load application settings from JSON files into dictionaries or strongly-typed objects.
-  - `DateTimeExtensions` – Elapsed time and stopwatch formatting.
-  - `LogFile` – Simple file-based logging with timestamped entries.
-  - `ObjectUtils` – Type checking and type name utilities for .NET objects.
-  - `StopWords` – Internal static list of common English stop words for text processing.
-- **BasicUtils.ML**
-  - `MlUtils` – N-gram extraction and other machine learning text utilities.
+- - **BasicUtils**
+  - `ConsoleTools` – Console color management (cache, restore, set).
+  - `CsvTools` – Synchronous and asynchronous CSV file loading, saving, and header extraction.
+  - `DateTimeTools` – Elapsed time and stopwatch formatting.
+  - `LogTools` – Simple file-based logging with timestamped entries.
+  - `MathTools` – Basic mathematical utilities for common operations.
+  - `MenuTools` – Console menu creation and management utilities.
+  - `MlTools` – Internal static list of common English stop words for text processing.
+  - `ObjectsTools` – Type checking and type name utilities for .NET objects.
+  - `SettingsTools` – Load application settings from JSON files into dictionaries or strongly-typed objects.
+  - `StringsTools` – String manipulation, console output helpers, random string generation, and input utilities.
+  - `ThreadingTools` – Basic threading utilities for task management and cancellation.
+
 
 > **Note:** Obsolete methods (such as `MlTools.GetNgramsFromString`) are not documented here. Use the latest APIs in the `ML` namespace.
 
