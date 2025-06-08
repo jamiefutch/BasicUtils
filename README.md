@@ -1,164 +1,382 @@
 # BasicUtils
 
-A few basic console and text utilities for .NET, useful for development and prototyping.
+A modern, modular collection of utility classes and extension methods for .NET 8 and .NET 9 projects.  
+BasicUtils is designed to simplify common programming tasks such as string manipulation, console operations, CSV handling, object type checking, logging, and basic machine learning text processing.
 
 ---
 
-**.NET Target:** .NET 8, .NET 9  
-**C# Version:** 12.0
+## Project Organization
+
+- **BasicUtils**
+  - `ConsoleTools` – Console color management (cache, restore, set).
+  - `CsvTools` – Synchronous and asynchronous CSV file loading, saving, and header extraction.
+  - `DateTimeTools` – Elapsed time and stopwatch formatting.
+  - `LogTools` – Simple file-based logging with timestamped entries.
+  - `MathTools` – Basic mathematical utilities for common operations.
+  - `MenuTools` – Console menu creation and management utilities.
+  - `MlTools` – Internal static list of common English stop words for text processing.
+  - `ObjectsTools` – Type checking and type name utilities for .NET objects.
+  - `SettingsTools` – Load application settings from JSON files into dictionaries or strongly-typed objects.
+  - `StringsTools` – String manipulation, console output helpers, random string generation, and input utilities.
+  - `ThreadingTools` – Basic threading utilities for task management and cancellation.
+
+
+> **Note:** Obsolete methods (such as `MlTools.GetNgramsFromString`) are not documented here. Use the latest APIs in the `ML` namespace.
 
 ---
 
-For more details, see the XML documentation in each source file.
+## Getting Started
 
-## Installationdotnet add package BasicUtilsor, using nuget...Install-Package BasicUtils
+1. **Add the project or source files to your .NET 8 or .NET 9 solution.**
+2. **Reference the `BasicUtils` namespace in your code:**
 
+## StringExtensions Usage
 
-## Usage
+The `StringExtensions` class provides a variety of extension methods for string manipulation, console output, and utility operations.  
+To use these methods, add `using BasicUtils;` to your file.
 
-### StringExtensions
-
-Extension methods for string manipulation and console interaction:
-
-Print(this string output, 
-            bool showTimeStamp = true,
-            ConsoleColor textColor = ConsoleColor.White)
-
-PrintLine(this string output,
-            bool showTimeStamp = true,
-            ConsoleColor textColor = ConsoleColor.White)
-
-PressAnyKey(this string prompt, 
-            bool showTimeStamp = true)
-
-Input(this string inputPrompt,
-            bool showTimeStamp = false,
-            ConsoleColor textColor = ConsoleColor.White)
-
-RemovePunctuation(this string text,
-            string replacement = "")
-
-RemoveSymbols(this string text,
-            string replacement = "")
-
-RemoveNumbers(this string text,
-            string replacement = "")### ConsoleExtensionsCacheForeColor()
-
-CacheBgColor()
-
-RestoreCachedForeColor()
-
-RestoreCachedBgColor()
-
-SetBgColor(ConsoleColor color)
-
-SetForeColor(ConsoleColor color)### DateTimeExtensionsElapsedTime(this long ticks)
-
-TimeFormatted(this Stopwatch sw)### LogFileWriteToLog(string LogPath, string LogMsg)### BasicUtils.ThreadingWaitAll(this IEnumerable<Thread> threads)### Menus// add namespace
-using BasicUtils.Menus
-
-// create menu
-MenuUtils mu = new MenuUtils();
-Menu menu  = new Menu();
-menu.id = "1";
-menu.menuHeader = "Select an option";
-menu.menuFooter = "?\t";
-
-// add menu item 1
-MenuItem menuItem = new MenuItem();
-menuItem.id = "1";
-menuItem.title = "item 1";
-menu.AddMenuItem(menuItem);
-
-// add menu item 2
-menuItem = new MenuItem();
-menuItem.id = "2";
-menuItem.title = "item 2";
-menu.AddMenuItem(menuItem);
-
-// save menu to file
-mu.SaveMenusToFile("menus.txt");
-
-// load menu from file
-mu.LoadMenusFromFile("menus.txt");
-
-// retrieve menu from menus (by id)
-var m = mu.GetMenu("1");
-
-// diplay menu and return user reponse
-var response = m.DisplayMenu();
-## Csv
-
-The `Csv` class provides support for simple CSV operations.
-
-### Public Methods
-
-- `string[] LoadRawCsv(string path, bool hasHeader = true)`: This method loads the raw CSV file into a string array. If `hasHeader` is true, the first line is skipped.
-
-- `Task<string[]> LoadRawCsvAsync(string path, bool hasHeader = true)`: This is the asynchronous version of the `LoadRawCsv` method.
-
-- `List<string[]> Load(string path, char delimiter = ',', bool hasHeader = true)`: This method loads the CSV file into a list of string arrays. If `hasHeader` is true, the first line is skipped.
-
-- `Task<List<string[]>> LoadAsync(string path, char delimiter = ',', bool hasHeader = true)`: This is the asynchronous version of the `Load` method.
-
-- `void Save(string path, List<string[]> data, char delimiter = ',')`: This method saves a list of string arrays to a CSV file.
-
-- `Task SaveAsync(string path, List<string[]> data, char delimiter = ',')`: This is the asynchronous version of the `Save` method.
-
-- `string[] GetHeadersFromFile(string path, char delimiter = ',')`: This method returns the headers from a CSV file.
-
-- `Task<string[]> GetHeadersFromFileAsync(string path, char delimiter = ',')`: This is the asynchronous version of the `GetHeadersFromFile` method.
-
-- `string[] GetHeadersFromRawCsv(string[] csv, char delimiter = ',')`: This method returns the headers from a raw CSV string array.
+### Console Output
+```
+"Hello, World!".p(); // Prints to console without a line feed 
+"Hello, World!".pl(); // Prints to console with a line feed
+"Hello, World!".Print(); // Prints with timestamp (default) 
+"Hello, World!".Print(showTimeStamp: false, textColor: ConsoleColor.Green); // Prints in green, no timestamp
+"Hello, World!".PrintLine(); // Prints with line feed and timestamp (default) 
+"Hello, World!".PrintLine(showTimeStamp: false); // Prints with line feed, no timestamp 
+"Hello, World!".PrintLine(showTimeStamp: true, textColor: ConsoleColor.Yellow); // Prints in yellow with timestamp
+```
 
 
-## MlTools
+### User Input
+```
+"Press any key to continue...".PressAnyKey(); // Shows prompt and waits for key press
+string name = "Enter your name: ".PrintForInput(); // Prompts and reads user input
+```
 
-### MlTools Usage
+### String Cleaning
+```
+string cleaned = "Hello, 123!".RemoveNumbers(); // "Hello, !" 
+string noPunct = "Hello, world!".RemovePunctuation(); // "Hello world" 
+string noSymbols = "A+B=C!".RemoveSymbols(); // "ABC"
+string noTabs = "Hello\tWorld".RemoveTabs(); // "Hello World" 
+string singleSpaced = "A   B   C".RemoveMultipleSpaces(); // "A B C"
+```
 
-- `var ngrams = MlTools.GetNgramsFromString("the quick brown fox", 2); // ["the|quick", "quick|brown", "brown|fox"]`
+### Stop Words
+`string filtered = "this is a test of the system".RemoveStopWords(); // "test system"`
+
+### String Utilities
+`string repeated = "abc".Repeat(3); // "abcabcabc"`
+
+### Random String Generation
+```
+// (Assuming you expose a public method for random string generation) 
+string randomAlpha = StringExtensions.CreateRandomString(10, StringExtensions.RandomStringSettings.AlphaOnly); 
+string randomAll = StringExtensions.CreateRandomString(16, StringExtensions.RandomStringSettings.AlphaNumericSpecialWithSpaces);
+```
+
+> **Note:** Some random string generation methods may be internal or obsolete; use the recommended public API.
+
+---
+
+**Tip:** All extension methods can be called directly on any string instance.
+
+---
+## ConsoleTools Usage
+
+The `ConsoleTools` class provides static methods for managing console foreground and background colors, allowing you to cache, restore, and set colors for improved console UI control.
+
+To use these methods, add `using BasicUtils;` to your file.
+
+### Color Management
+
+```
+// Cache the current foreground and background colors 
+ConsoleTools.CacheForeColor(); 
+ConsoleTools.CacheBgColor();
+
+// Set new colors 
+ConsoleTools.SetForeColor(ConsoleColor.Yellow); 
+ConsoleTools.SetBgColor(ConsoleColor.DarkBlue);
+// ... perform console output ...
+// Restore the original colors 
+ConsoleTools.RestoreCachedForeColor(); 
+ConsoleTools.RestoreCachedBgColor();
+```
+---
+
+**Tip:** These utilities help maintain consistent console appearance, especially when outputting colored text or building interactive console applications.
+
+---
+
+## CsvTools Usage
+
+The `CsvTools` class provides methods for reading, writing, and processing CSV files, both synchronously and asynchronously.  
+To use these methods, add `using BasicUtils;` to your file.
+
+### Loading CSV Data
+```
+// Load all rows from a CSV file (as arrays of strings) 
+var rows = CsvTools.Load("data.csv");
+
+// Load CSV data with a custom delimiter and skip header 
+var rowsNoHeader = CsvTools.Load("data.csv", delimiter: ';', hasHeader: false);
+
+// Asynchronously load CSV data 
+var rowsAsync = await CsvTools.LoadAsync("data.csv");
+```
 
 
-Basic machine learning tools:
+### Saving CSV Data
+```
+// Save a list of string arrays to a CSV file 
+CsvTools.Save("output.csv", rows);
 
-### Public Methods
+// Save with a custom delimiter 
+CsvTools.Save("output.csv", rows, delimiter: ';');
 
-- `List<string> GetNgramsFromString(string text, int length)`: This method generates a list of n-grams from a given string. The `text` parameter is the input string from which n-grams are to be generated, and the `length` parameter specifies the number of words in each n-gram.
+// Asynchronously save CSV data await 
+CsvTools.SaveAsync("output.csv", rows);
+```
 
-- `Task<List<string>> GetNgramsFromStringAsync(string text, int length)`: This is the asynchronous version of the `GetNgramsFromString` method. It also generates a list of n-grams from a given string. The `text` parameter is the input string from which n-grams are to be generated, and the `length` parameter specifies the number of words in each n-gram.
+### Working with Raw CSV Lines
+```
+// Load raw lines from a CSV file (as strings) 
+string[] lines = CsvTools.LoadRawCsv("data.csv");
+
+// Asynchronously load raw lines 
+string[] linesAsync = await CsvTools.LoadRawCsvAsync("data.csv");
+```
+
+### Extracting Headers
+```
+// Load raw lines from a CSV file (as strings) 
+string[] lines = CsvTools.LoadRawCsv("data.csv");
+
+// Asynchronously load raw lines 
+string[] linesAsync = await CsvTools.LoadRawCsvAsync("data.csv");
+```
+
+```
+// Get headers from a CSV file 
+string[] headers = CsvTools.GetHeadersFromFile("data.csv");
+
+// Asynchronously get headers 
+string[] headersAsync = await 
+CsvTools.GetHeadersFromFileAsync("data.csv");
+
+// Get headers from a raw CSV string array 
+string[] headersFromRaw = CsvTools.GetHeadersFromRawCsv(lines);
+```
+
+---
+
+**Tip:**  
+- All methods support custom delimiters (default is `,`).
+- Asynchronous methods are ideal for large files or UI applications.
+- Use `hasHeader: false` if your CSV does not include a header row.
 
 
-## AppSettings
+---
 
-### AppSettings Usage
-- `var settings = AppSettings.LoadSettings("appsettings.json"); var typedSettings = AppSettings.LoadSettings<MySettings>("appsettings.json", new MySettings());`
+## DateTimeTools Usage
 
+The `DateTimeTools` class provides extension methods for formatting elapsed time and stopwatch durations, making it easy to display time intervals in a human-readable format.
 
-Utility methods for loading settings from a JSON file:
+To use these methods, add `using BasicUtils;` to your file.
 
-### Public Methods
+### Formatting Elapsed Time
 
-- `Dictionary<string,string> LoadSettings(string path)`: This method loads settings from a JSON file. The settings are returned as a dictionary where each key-value pair represents a setting. The `path` parameter specifies the path to the JSON file.
-
-- `T LoadSettings<T>(string path, T settingsType)`: This is a generic method that loads settings from a JSON file. The settings are deserialized into an object of type `T`. The `path` parameter specifies the path to the JSON file, and the `settingsType` parameter is an instance of the `T` type that specifies the type to which the settings should be deserialized.
-
-
-## Math
-Fast modulo operation for large loops
-
-## ObjectExtensions
-Extension methods for object manipulation:
-
-### Usage
-- `bool isInt = ObjectUtils.IsInt("123"); // true string typeName = ObjectUtils.GetTypeName(123.45); // "double"`
+```
+long ticks = 1234567890; string elapsed = ticks.ElapsedTime(); // "00:20:34:56" (HH:MM:SS:MS)
+```
 
 
+### Formatting Stopwatch Durations
+```
+var sw = new System.Diagnostics.Stopwatch(); 
+sw.Start(); 
 
-### LicenseThe MIT License ~(MIT)
-Copyright Jamie Futch
+// ... perform some work ... 
 
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the “Software”), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+sw.Stop(); 
+string formatted = sw.TimeFormatted(); // "00:00:01:23" (HH:MM:SS:MS)
+```
 
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+---
 
-    THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+**Tip:**  
+- These methods are useful for logging, benchmarking, and displaying durations in console or UI applications.
+- The format is always `"HH:MM:SS:MS"` for consistency.
+
+--- 
+## LogTools Usage
+
+The `LogTools` class provides simple file-based logging functionality, allowing you to write timestamped log entries to text files for diagnostics, auditing, or general application logging.
+
+To use these methods, add `using BasicUtils;` to your file.
+
+### Writing Log Entries
+
+```
+LogTools.WriteToLog(@"C:\Logs", "Application started."); 
+LogTools.WriteToLog(@"C:\Logs", $"Error occurred at {DateTime.Now}: {ex.Message}");
+```
+
+- Each log entry is written to a file named with the current date (e.g., `06082025.txt`) in the specified directory.
+- Entries are separated by a line of equal signs and include a timestamp for each message.
+- If the log file does not exist, it is created automatically; otherwise, entries are appended.
+
+**Tip:**  
+- Use a dedicated log directory to keep your log files organized.
+- LogTools is ideal for lightweight logging needs in console and utility applications.
+
+---
+
+## MenuTools Usage
+
+The `MenuTools` class provides utilities for creating and managing interactive console menus, making it easy to build user-friendly command-line interfaces.
+
+To use these methods, add `using BasicUtils;` to your file.
+
+### Example Usage
+```
+// Define menu options 
+var options = new List<string> { "Option 1", "Option 2", "Option 3", "Exit" };
+
+// Display a simple menu and get the user's selection 
+int selectedIndex = MenuTools.ShowMenu("Main Menu", options);
+
+// Act on the user's choice 
+switch (selectedIndex) 
+{ 
+	case 0: 
+		// Handle Option 1 
+		break; 
+	case 1: 
+		// Handle Option 2 
+		break; 
+	case 2: 
+		// Handle Option 3 
+		break; 
+	case 3: 
+		// Exit 
+		break; 
+}
+```
+---
+
+**Tip:**  
+- MenuTools helps you quickly build navigable console menus for scripts, utilities, and interactive applications.
+- You can customize menu prompts, handle user input, and extend menu logic as needed.
+
+---
+
+## MlTools Usage
+
+The `MlTools` class provides a static list of common English stop words for use in text processing and natural language applications.  
+This is useful for filtering out non-informative words when performing tasks such as tokenization, keyword extraction, or building machine learning models.
+
+To use these methods, add `using BasicUtils;` to your file.
+
+### Accessing the Stop Words List
+
+```
+var stopWords = MlTools.StopWordsList; 
+if (stopWords.Contains("the")) { // "the" is a stop word }
+```
+
+
+### Example: Removing Stop Words from Text
+
+```
+var words = "this is a test of the system".Split(' '); 
+var filtered = words.Where(word => !MlTools.StopWordsList.Contains(word)); 
+string result = string.Join(" ", filtered); // "test system"
+```
+
+
+**Tip:**  
+- The stop words list is provided as a static string array for fast lookups.
+- Use this list to improve the quality of text analysis, search, and machine learning features by ignoring common words.
+
+---
+
+## ObjectsTools Usage
+
+The `ObjectsTools` class provides utility methods for type checking and type name detection, making it easy to determine the type of an object at runtime and perform robust type validation.
+
+To use these methods, add `using BasicUtils;` to your file.
+
+### Type Checking and Type Name Detection
+
+```
+// Determine the type name of an object 
+string typeName = ObjectsTools.GetTypeName(123.45); // "double"
+
+// Check if an object is a specific type 
+bool isInt = ObjectsTools.IsInt("123");         
+
+bool isLong = ObjectsTools.IsLong(123L);        
+
+bool isDouble = ObjectsTools.IsDouble("3.14");  
+
+bool isFloat = ObjectsTools.IsFloat(1.23f);     
+
+bool isDecimal = ObjectsTools.IsDecimal("9.99");
+
+bool isDateTime = ObjectsTools.IsDateTime("2025-06-08"); 
+
+bool isBool = ObjectsTools.IsBool(true);        
+
+bool isChar = ObjectsTools.IsChar('A');         
+
+bool isString = ObjectsTools.IsString("hello"); 
+
+bool isCurrency = ObjectsTools.IsCurrency("$12.34"); 
+```
+
+
+**Tip:**  
+- These methods are useful for dynamic data validation, parsing, and runtime type analysis.
+- All methods are static and can be called directly from the class.
+- `GetTypeName` returns a string such as `"int"`, `"double"`, `"DateTime"`, or `"unknown"` for unrecognized types.
+
+---
+
+## SettingsTools Usage
+
+The `SettingsTools` class provides methods for loading application settings from JSON files into dictionaries or strongly-typed objects, making configuration management simple and robust.
+
+To use these methods, add `using BasicUtils;` to your file.
+
+### Loading Settings as a Dictionary
+
+```
+// Load settings from a JSON file into a dictionary 
+var settings = SettingsTools.LoadSettings("appsettings.json"); 
+string apiKey = settings["ApiKey"];
+```
+
+
+### Loading Settings as a Strongly-Typed Object
+
+```
+// Define a settings class 
+
+public class MySettings 
+{ public string ApiKey { get; set; } public int Timeout { get; set; } }
+
+// Load settings from a JSON file into a strongly-typed object 
+
+var mySettings = SettingsTools.LoadSettings<MySettings>("appsettings.json"); 
+string apiKey = mySettings.ApiKey; 
+int timeout = mySettings.Timeout;
+```
+---
+
+**Tip:**  
+- Use strongly-typed objects for compile-time safety and IntelliSense support.
+- Use the dictionary approach for dynamic or loosely-typed configuration scenarios.
+- The JSON file should be well-formed and match the structure of your settings class if using strong typing.
+- Don't be a moron and store credintials in these settings

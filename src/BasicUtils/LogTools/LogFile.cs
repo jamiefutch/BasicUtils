@@ -32,6 +32,7 @@ namespace BasicUtils
         /// </remarks>
         /// <exception cref="ArgumentException">Thrown if <paramref name="logPath"/> is null or empty.</exception>
         /// <exception cref="IOException">Thrown if the file cannot be created or written to.</exception>
+        [Obsolete("Use Logs.LogUtils.WriteTolog")]
         public static void WriteToLog(string logPath, string logMsg)
         {
             if (string.IsNullOrWhiteSpace(logPath))
