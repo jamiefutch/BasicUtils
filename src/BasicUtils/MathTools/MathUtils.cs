@@ -42,6 +42,67 @@ public class MathUtils :IDisposable
     }
 
     /// <summary>
+    /// Generates a shuffled array of integers with optional parameters for range, count, and duplicates.
+    /// </summary>
+    /// <param name="minValue">The minimum value (inclusive) for the generated numbers.</param>
+    /// <param name="maxValue">The maximum value (inclusive) for the generated numbers.</param>
+    /// <param name="count">The number of integers to generate.</param>
+    /// <param name="allowDuplicates">Whether duplicate values are allowed in the generated array.</param>
+    /// <returns>
+    /// An array of shuffled integers. If <paramref name="allowDuplicates"/> is false, all values are unique.
+    /// </returns>
+    /// <exception cref="ArgumentException">
+    /// Thrown if <paramref name="minValue"/> is greater than <paramref name="maxValue"/>, 
+    /// if <paramref name="count"/> is negative, or if <paramref name="count"/> exceeds the range of unique numbers available.
+    /// </exception>
+    public int[] GenerateShuffledArray(
+        int minValue = 0,
+        int maxValue = 1,
+        int count = 1,
+        bool allowDuplicates = false)
+    {
+        if (minValue > maxValue) throw new ArgumentException("Minimum value cannot be greater than maximum value.");
+        if (count < 0) throw new ArgumentException("Count cannot be negative.");
+
+        var random = new Random();
+        var result = new List<int>();
+
+        if (allowDuplicates)
+        {
+            int[] array = new int[count];
+            for (var i = 0; i < count; i++)
+            {
+                array[i] = random.Next(minValue, maxValue + 1);
+            }
+
+            return array;
+        }
+        else
+        {
+            var range = Enumerable.Range(minValue, maxValue - minValue + 1).ToList();
+
+            if (count > range.Count)
+                throw new ArgumentException("Count exceeds the range of unique numbers available.");
+            HashSet<int> numbers = new HashSet<int>();
+
+            for (var i = 0; i < count; i++)
+            {
+                var index = random.Next(range.Count);
+                try
+                {
+                    numbers.Add(random.Next(minValue, maxValue + 1));
+                }
+                catch
+                {
+                    // ignored
+                }
+            }
+        }
+
+        return result.ToArray();
+    }
+
+    /// <summary>
     /// Releases all resources used by the <see cref="MathUtils"/> class.
     /// </summary>
     /// <remarks>

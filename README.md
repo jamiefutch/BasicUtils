@@ -380,3 +380,51 @@ int timeout = mySettings.Timeout;
 - Use the dictionary approach for dynamic or loosely-typed configuration scenarios.
 - The JSON file should be well-formed and match the structure of your settings class if using strong typing.
 - Don't be a moron and store credintials in these settings
+
+---
+
+## MathTools Usage
+
+## GenerateShuffledArray Usage
+
+The `GenerateShuffledArray` method in `MathUtils` creates an array of random integers within a specified range, with options for the number of values and whether duplicates are allowed.
+
+To use this method, add `using BasicUtils.MathTools;` to your file and create an instance of `MathUtils`.
+
+### Method Signature
+```
+public int[] GenerateShuffledArray( int minValue = 0, int maxValue = 1, int count = 1, bool allowDuplicates = false)
+```
+
+
+### Parameters
+
+- `minValue` (int): The minimum value (inclusive) for generated numbers.
+- `maxValue` (int): The maximum value (inclusive) for generated numbers.
+- `count` (int): The number of integers to generate.
+- `allowDuplicates` (bool): If `true`, duplicate values are allowed; if `false`, all values are unique.
+
+### Returns
+
+- An array of shuffled integers according to the specified parameters.
+
+### Exceptions
+
+- `ArgumentException` if:
+  - `minValue` is greater than `maxValue`
+  - `count` is negative
+  - `count` exceeds the number of unique values in the range when `allowDuplicates` is `false`
+
+### Example Usage
+```csharp
+using BasicUtils.MathTools;
+var mathUtils = new MathUtils();
+// Generate 5 unique random numbers between 1 and 10 int[] uniqueNumbers = mathUtils.GenerateShuffledArray(1, 10, 5, false);
+// Generate 8 random numbers between 0 and 3, allowing duplicates int[] numbersWithDuplicates = mathUtils.GenerateShuffledArray(0, 3, 8, true);
+```
+
+---
+
+**Tip:**  
+- Use `allowDuplicates: false` to ensure all values are unique.
+- For large ranges or counts, consider performance and exception handling.
