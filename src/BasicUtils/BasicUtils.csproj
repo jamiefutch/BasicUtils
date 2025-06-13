@@ -23,6 +23,7 @@
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <TargetFramework></TargetFramework>
     <Platforms>AnyCPU</Platforms>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0|AnyCPU'">
