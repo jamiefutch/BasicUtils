@@ -1,5 +1,5 @@
 using Xunit;
-using BasicUtils;
+using BasicUtils.MathTools;
 
 namespace BasicUtilsTest
 {
@@ -11,9 +11,10 @@ namespace BasicUtilsTest
             // Arrange
             long limitCount = 10;
             long limit = 10;
+            var math = new MathUtils();
 
             // Act
-            var result = BasicUtils.Math.FastModForLoop(limitCount, limit);
+            var result = math.FastModForLoop(limitCount, limit);
 
             // Assert
             Assert.True(result);
@@ -25,14 +26,29 @@ namespace BasicUtilsTest
             // Arrange
             long limitCount = 8;
             long limit = 10;
+            var math = new MathUtils();
 
             // Act
-            var result = BasicUtils.Math.FastModForLoop(limitCount, limit);
+            var result = math.FastModForLoop(limitCount, limit);
 
             // Assert
             Assert.False(result);
         }
 
+        [Fact]
+        public void FastModForLoop_ShouldReturnFalse_WhenLimitCountEqualsLimitMinusOne()
+        {
+            // Arrange
+            long limitCount = 9;
+            long limit = 10;
+            var math = new MathUtils();
+
+            // Act
+            var result = math.FastModForLoop(limitCount, limit);
+
+            // Assert
+            Assert.False(result);
+        }
 
         [Fact]
         public void FastModForLoop_ShouldHandleLargeNumbers()
@@ -40,9 +56,10 @@ namespace BasicUtilsTest
             // Arrange
             long limitCount = 1_000_000_000;
             long limit = 1_000_000;
+            var math = new MathUtils();
 
             // Act
-            var result = BasicUtils.Math.FastModForLoop(limitCount, limit);
+            var result = math.FastModForLoop(limitCount, limit);
 
             // Assert
             Assert.True(result);

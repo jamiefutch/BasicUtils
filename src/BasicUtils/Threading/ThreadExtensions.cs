@@ -12,7 +12,8 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
 using System.Collections.Generic;
 using System.Threading;
 
-namespace BasicUtils.Threading
+// ReSharper disable once CheckNamespace
+namespace BasicUtils
 {
     /// <summary>
     /// Extension methods to help with threads

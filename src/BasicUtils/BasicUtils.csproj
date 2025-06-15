@@ -142,13 +142,16 @@ BasicUtils is designed to simplify common programming tasks such as string manip
       <PackagePath>\</PackagePath>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="BU-Logo-Cropped.ico" />
+    <Content Include="BU-Logo-Cropped.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
     <None Include="..\..\art\BU-Logo-Cropped.png">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 
