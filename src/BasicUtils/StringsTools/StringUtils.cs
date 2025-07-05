@@ -15,6 +15,8 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 
 namespace BasicUtils.StringsTools;
 
@@ -23,6 +25,9 @@ namespace BasicUtils.StringsTools;
 /// </summary>
 public class Utils :IDisposable
 {
+    
+    private readonly Random _random = new Random();
+
     /// <summary>
     /// Specifies the settings for generating random strings.
     /// </summary>
@@ -38,7 +43,6 @@ public class Utils :IDisposable
     /// <summary>
     /// Generates a random string containing alphabetic, numeric, special characters, and spaces.
     /// </summary>
-    private Random _random = new Random();
     public enum RandomStringSettings
     {
         /// <summary>
@@ -201,65 +205,64 @@ public class Utils :IDisposable
     /// <exception cref="ArgumentNullException">Thrown if the <paramref name="text"/> parameter is null.</exception>
     public Dictionary<int, WordCount> CountWords(string[] text)
     {
-        // Highly optimized: use stackalloc for small word buffer, avoid ToString, minimize allocations
-        var wordCounts = new Dictionary<int, WordCount>(capacity: 4096);
+        // Pre-allocate with better capacity estimation
+        var wordCounts = new Dictionary<int, WordCount>(capacity: 8192);
+
         foreach (var line in text)
         {
-            var cleanedLine = line.Trim();
-            if (cleanedLine.Length > 0)
-            {
-                cleanedLine = cleanedLine.RemovePunctuation().RemoveSymbols();
-            }
-            else
-            {
-                continue;
-            }
+            var l = line.AsSpan();
 
-            var l = cleanedLine.AsSpan().Trim();
+            // Fast empty check without Trim allocation
             if (l.IsEmpty)
                 continue;
 
+            // Trim manually to avoid allocation
+            int lineStart = 0;
+            int lineEnd = l.Length - 1;
+
+            while (lineStart <= lineEnd && char.IsWhiteSpace(l[lineStart]))
+                lineStart++;
+            while (lineEnd >= lineStart && char.IsWhiteSpace(l[lineEnd]))
+                lineEnd--;
+
+            if (lineStart > lineEnd)
+                continue;
+
+            l = l.Slice(lineStart, lineEnd - lineStart + 1);
+
             int start = 0;
-            for (int i = 0; i <= l.Length; i++)
+            int len = l.Length;
+
+            for (int i = 0; i <= len; i++)
             {
-                if (i == l.Length || char.IsWhiteSpace(l[i]))
+                if (i == len || char.IsWhiteSpace(l[i]))
                 {
-                    if (start < i)
+                    int wordLength = i - start;
+                    if (wordLength > 0)
                     {
+                        var wordSpan = l.Slice(start, wordLength);
 
-                        var wordSpan = l.Slice(start, i - start);
-                        // Use a fast hash (FNV-1a) to avoid string allocation
-                        int hash = unchecked((int)2166136261u);
-                        for (int j = 0; j < wordSpan.Length; j++)
-                            hash = (hash ^ wordSpan[j]) * 16777619;
+                        // Optimized FNV-1a hash with unrolling for common cases
+                        int hash = ComputeOptimizedHash(wordSpan);
 
-                        if (wordCounts.TryGetValue(hash, out var wc))
+                        ref var dictValue = ref CollectionsMarshal.GetValueRefOrAddDefault(wordCounts, hash, out bool exists);
+
+                        if (exists)
                         {
                             // Compare actual word to avoid hash collision
-                            if (wordSpan.SequenceEqual(wc.Word.AsSpan()))
+                            if (wordSpan.SequenceEqual(dictValue.Word.AsSpan()))
                             {
-                                wc.Count++;
-                                wordCounts[hash] = wc;
+                                dictValue.Count++;
                             }
                             else
                             {
-                                // Collision: fallback to string key
-                                string word = wordSpan.ToString();
-                                int strHash = word.GetHashCode();
-                                if (wordCounts.TryGetValue(strHash, out var wc2) && wc2.Word == word)
-                                {
-                                    wc2.Count++;
-                                    wordCounts[strHash] = wc2;
-                                }
-                                else
-                                {
-                                    wordCounts[strHash] = new WordCount { Word = word, Count = 1 };
-                                }
+                                // Collision: use linear probing with string hash
+                                HandleCollisionOptimized(wordSpan, wordCounts);
                             }
                         }
                         else
                         {
-                            wordCounts[hash] = new WordCount { Word = wordSpan.ToString(), Count = 1 };
+                            dictValue = new WordCount { Word = wordSpan.ToString(), Count = 1 };
                         }
                     }
                     start = i + 1;
@@ -268,6 +271,71 @@ public class Utils :IDisposable
         }
         return wordCounts;
     }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private static int ComputeOptimizedHash(ReadOnlySpan<char> wordSpan)
+    {
+        const int smallWordThreshold = 5;
+        int hash = unchecked((int)2166136261u);
+        int length = wordSpan.Length;
+        int i = 0;
+
+        // Unroll loop for better performance on small words (most common case)
+        if (length >= smallWordThreshold)
+        {
+            for (; i <= length - smallWordThreshold; i += smallWordThreshold)
+            {
+                hash = (hash ^ wordSpan[i]) * 16777619;
+                hash = (hash ^ wordSpan[i + 1]) * 16777619;
+                hash = (hash ^ wordSpan[i + 2]) * 16777619;
+                hash = (hash ^ wordSpan[i + 3]) * 16777619;
+                hash = (hash ^ wordSpan[i + 4]) * 16777619;
+            }
+        }
+
+        // Handle remaining characters
+        for (; i < length; i++)
+        {
+            hash = (hash ^ wordSpan[i]) * 16777619;
+        }
+
+        return hash;
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private void HandleCollisionOptimized(ReadOnlySpan<char> wordSpan, Dictionary<int, WordCount> wordCounts)
+    {
+        // Use a simple linear probing approach instead of string hash fallback
+        string word = wordSpan.ToString();
+        int baseHash = word.GetHashCode();
+        int probe = 0;
+
+        while (probe < 8) // Limit probing to avoid infinite loops
+        {
+            int probeHash = baseHash + probe;
+
+            ref var dictValue = ref CollectionsMarshal.GetValueRefOrAddDefault(wordCounts, probeHash, out bool exists);
+
+            if (!exists)
+            {
+                dictValue = new WordCount { Word = word, Count = 1 };
+                return;
+            }
+
+            if (dictValue.Word == word)
+            {
+                dictValue.Count++;
+                return;
+            }
+
+            probe++;
+        }
+
+        // Fallback: use the word itself as key (this should be rare)
+        int finalHash = HashCode.Combine(word, probe);
+        wordCounts[finalHash] = new WordCount { Word = word, Count = 1 };
+    }
+
 
     /// <summary>
     /// Displays the word counts in descending order of frequency.
