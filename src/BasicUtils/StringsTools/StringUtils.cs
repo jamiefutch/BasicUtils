@@ -38,6 +38,7 @@ public class Utils :IDisposable
     /// <summary>
     /// Generates a random string containing alphabetic, numeric, special characters, and spaces.
     /// </summary>
+    private Random _random = new Random();
     public enum RandomStringSettings
     {
         /// <summary>
@@ -88,27 +89,35 @@ public class Utils :IDisposable
                 chars = @"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
                 break;
             case RandomStringSettings.AlphaNumericSpecial:
-                chars = @"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_=+[]{}|;:',.<>/?`~";
+                chars =
+                    @"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_=+[]{}|;:',.<>/?`~";
                 break;
             case RandomStringSettings.AlphaNumericSpecialWithSpaces:
-                chars = @"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_=+[]{}|;:',.<>/?`~ ";
+                chars =
+                    @"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_=+[]{}|;:',.<>/?`~ ";
                 break;
             default:
                 chars = @"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
                 break;
         }
 
-        Random random = new Random();
-        return new string(Enumerable.Repeat(chars, length)
-            .Select(s => s[random.Next(s.Length)]).ToArray());
+        char[] result = new char[length];
+
+        for (int i = 0; i < length; i++)
+        {
+            int index = _random.Next(chars.Length);
+            result[i] = chars[index];
+        }
+
+        return new string(result);
     }
 
 
     #region WordCounts
-    
-    /// <summary>
-    /// Represents a word and its associated count, typically used for word frequency analysis.
-    /// </summary>
+
+        /// <summary>
+        /// Represents a word and its associated count, typically used for word frequency analysis.
+        /// </summary>
     public struct WordCount
     {
         public string Word { get; set; }
