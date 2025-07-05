@@ -1,7 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Authors>Jamie Futch</Authors>
+	<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+	<Authors>Jamie Futch</Authors>
     <Description>A modern, modular collection of utility classes and extension methods for .NET 8 and .NET 9 projects.  
 BasicUtils is designed to simplify common programming tasks such as string manipulation, console operations, CSV handling, object type checking, logging, and basic machine learning text processing.</Description>
     <Copyright>Jamie Futch, 2025</Copyright>
@@ -27,6 +28,8 @@ BasicUtils is designed to simplify common programming tasks such as string manip
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <ApplicationIcon>BU-Logo-Cropped.ico</ApplicationIcon>
     <PackageIcon>BU-Logo-Cropped.png</PackageIcon>
+    <BaseOutputPath>..\..\outputs\</BaseOutputPath>
+	
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0|AnyCPU'">
