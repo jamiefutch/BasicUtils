@@ -12,6 +12,7 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,10 +20,20 @@ using System.Threading.Tasks;
 namespace BasicUtils.StringsTools;
 
 /// <summary>
-/// String Extension methods
+/// String Utility Class
 /// </summary>
 public class Utils :IDisposable
 {
+    private readonly Random _random;
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="Utils"/> class.
+    /// </summary>
+    public Utils()
+    {
+        _random = new Random();
+    }
+
     /// <summary>
     /// Specifies the settings for generating random strings.
     /// </summary>
@@ -98,9 +109,15 @@ public class Utils :IDisposable
                 break;
         }
 
-        Random random = new Random();
-        return new string(Enumerable.Repeat(chars, length)
-            .Select(s => s[random.Next(s.Length)]).ToArray());
+        char[] result = new char[length];
+
+        for (int i = 0; i < length; i++)
+        {
+            int index = _random.Next(chars.Length);
+            result[i] = chars[index];
+        }
+
+        return new string(result);
     }
 
     #region WordCounts
@@ -191,7 +208,6 @@ public class Utils :IDisposable
     /// <exception cref="ArgumentNullException">Thrown if the <paramref name="text"/> parameter is null.</exception>
     public Dictionary<int, WordCount> CountWords(string[] text)
     {
-        // Highly optimized: use stackalloc for small word buffer, avoid ToString, minimize allocations
         var wordCounts = new Dictionary<int, WordCount>(capacity: 4096);
         foreach (var line in text)
         {
@@ -258,6 +274,87 @@ public class Utils :IDisposable
         }
         return wordCounts;
     }
+
+
+
+    /// <summary>
+    /// Counts the occurrences of each word in a text file and returns the results as a dictionary. Ideal for large files.
+    /// </summary>
+    /// <param name="filePath">The absolute path to the file to be processed.</param>
+    /// <returns>
+    /// A dictionary where the key is a hash of the word, and the value is a <see cref="WordCount"/> 
+    /// struct containing the word and its count.
+    /// </returns>
+    /// <exception cref="ArgumentNullException">Thrown when <paramref name="filePath"/> is null or empty.</exception>
+    /// <exception cref="FileNotFoundException">Thrown when the file specified by <paramref name="filePath"/> does not exist.</exception>
+    /// <exception cref="IOException">Thrown when an I/O error occurs while reading the file.</exception>
+    /// <remarks>
+    /// This method uses a hash-based approach to count words efficiently. It handles hash collisions
+    /// by comparing the actual word content. The method is optimized for large files and uses a 
+    /// default dictionary capacity of 8192 to minimize resizing overhead.
+    /// </remarks>
+    public Dictionary<int, WordCount> CountWordsFromFile(string filePath)
+    {
+        
+        var wordCounts = new Dictionary<int, WordCount>(capacity: 8192);
+        using StreamReader reader = new StreamReader(filePath);
+        string line;
+        while ((line = reader.ReadLine()) != null)
+        {
+            var l = line.AsSpan().Trim();
+            if (l.IsEmpty)
+                continue;
+
+            int start = 0;
+            for (int i = 0; i <= l.Length; i++)
+            {
+                if (i == l.Length || char.IsWhiteSpace(l[i]))
+                {
+                    if (start < i)
+                    {
+                        var wordSpan = l.Slice(start, i - start);
+                        // Use a fast hash (FNV-1a) to avoid string allocation
+                        int hash = unchecked((int)2166136261u);
+                        for (int j = 0; j < wordSpan.Length; j++)
+                            hash = (hash ^ wordSpan[j]) * 16777619;
+
+                        if (wordCounts.TryGetValue(hash, out var wc))
+                        {
+                            // Compare actual word to avoid hash collision
+                            if (wordSpan.SequenceEqual(wc.Word.AsSpan()))
+                            {
+                                wc.Count++;
+                                wordCounts[hash] = wc;
+                            }
+                            else
+                            {
+                                // Collision: fallback to string key
+                                string word = wordSpan.ToString();
+                                int strHash = word.GetHashCode();
+                                if (wordCounts.TryGetValue(strHash, out var wc2) && wc2.Word == word)
+                                {
+                                    wc2.Count++;
+                                    wordCounts[strHash] = wc2;
+                                }
+                                else
+                                {
+                                    wordCounts[strHash] = new WordCount { Word = word, Count = 1 };
+                                }
+                            }
+                        }
+                        else
+                        {
+                            wordCounts[hash] = new WordCount { Word = wordSpan.ToString(), Count = 1 };
+                        }
+                    }
+                    start = i + 1;
+                }
+            }
+        }
+
+        return wordCounts;
+    }
+
 
     /// <summary>
     /// Displays the word counts in descending order of frequency.
