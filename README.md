@@ -30,6 +30,13 @@ BasicUtils is designed to simplify common programming tasks such as string manip
 1. **Add the project or source files to your .NET 8 or .NET 9 solution.**
 2. **Reference the `BasicUtils` namespace in your code:**
 
+## Adding BasicUtils
+```
+dotnet add package BasicUtils
+```
+[Nuget.org](https://www.nuget.org/packages/BasicUtils/)
+
+
 ## StringExtensions Usage
 
 The `StringExtensions` class provides a variety of extension methods for string manipulation, console output, and utility operations.  
