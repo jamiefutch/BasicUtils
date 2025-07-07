@@ -30,6 +30,13 @@ BasicUtils is designed to simplify common programming tasks such as string manip
 1. **Add the project or source files to your .NET 8 or .NET 9 solution.**
 2. **Reference the `BasicUtils` namespace in your code:**
 
+## Adding BasicUtils
+```
+dotnet add package BasicUtils
+```
+[Nuget.org](https://www.nuget.org/packages/BasicUtils/)
+
+
 ## StringExtensions Usage
 
 The `StringExtensions` class provides a variety of extension methods for string manipulation, console output, and utility operations.  
@@ -80,6 +87,43 @@ string randomAll = StringExtensions.CreateRandomString(16, StringExtensions.Rand
 ---
 
 **Tip:** All extension methods can be called directly on any string instance.
+
+### Word Counting
+```
+// Count words in an array of lines 
+string[] lines = { "Hello world!", "Hello again, world." }; 
+
+var utils = new Utils(); 
+var wordCounts = utils.CountWords(lines); // wordCounts is a Dictionary<int, Utils.WordCount>
+
+// Count words from a file 
+var fileWordCounts = utils.CountWordsFromFile("myfile.txt");
+
+// Display word counts (top 10) 
+utils.DisplayWordCounts(wordCounts, numberToDisplay: 10);
+```
+
+### WordCount Structure
+
+The `WordCount` struct represents a word and its count:
+```
+public struct WordCount 
+{ 
+  public string Word { get; set; } 
+  public int Count { get; set; } 
+}
+```
+
+### Tips
+
+- Use `CountWordsTextWindows` for Windows line endings (`\r\n`) and `CountWordsTextUnix` for Unix line endings (`\n`) if you need per-line word analysis.
+- All word counting methods remove punctuation and symbols before counting.
+- `DisplayWordCounts` prints the most frequent words in descending order.
+---
+
+**Note:**  
+- The `Utils` class implements `IDisposable`, but currently does not require explicit disposal.
+- For random string generation, use the `RandomStringSettings` enum to control the character set.
 
 ---
 ## ConsoleTools Usage

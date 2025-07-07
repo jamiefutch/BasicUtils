@@ -1,15 +1,17 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Authors>Jamie Futch</Authors>
-    <Description>Some basic utils for making .net applications a bit easier</Description>
+	<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+	<Authors>Jamie Futch</Authors>
+    <Description>A modern, modular collection of utility classes and extension methods for .NET 8 and .NET 9 projects.  
+BasicUtils is designed to simplify common programming tasks such as string manipulation, console operations, CSV handling, object type checking, logging, and basic machine learning text processing.</Description>
     <Copyright>Jamie Futch, 2025</Copyright>
     <PackageLicenseFile>license.txt</PackageLicenseFile>
     <PackageProjectUrl>https://github.com/jamiefutch/BasicUtils</PackageProjectUrl>
-    <Version>1.3.1</Version>
-    <PackageVersion>1.3.1</PackageVersion>
-    <AssemblyVersion>1.3.1</AssemblyVersion>
-    <FileVersion>1.3.1</FileVersion>
+    <Version>1.4.0</Version>
+    <PackageVersion>1.4.0</PackageVersion>
+    <AssemblyVersion>1.4.0</AssemblyVersion>
+    <FileVersion>1.4.0</FileVersion>
     <RepositoryUrl>https://github.com/jamiefutch/BasicUtils</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>console utils; string utils; csv; text processing; machine learning; nlp; menu; datetime; logging; threading; .NET; utilities; extension methods; data processing</PackageTags>
@@ -24,6 +26,10 @@
     <TargetFramework></TargetFramework>
     <Platforms>AnyCPU</Platforms>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <ApplicationIcon>BU-Logo-Cropped.ico</ApplicationIcon>
+    <PackageIcon>BU-Logo-Cropped.png</PackageIcon>
+    <BaseOutputPath>..\..\outputs\</BaseOutputPath>
+	
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0|AnyCPU'">
@@ -139,6 +145,17 @@
       <PackagePath>\</PackagePath>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="BU-Logo-Cropped.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\art\BU-Logo-Cropped.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
   <ItemGroup>

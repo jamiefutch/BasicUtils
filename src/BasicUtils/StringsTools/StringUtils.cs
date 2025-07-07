@@ -12,17 +12,30 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 
 namespace BasicUtils.StringsTools;
 
 /// <summary>
-/// String Extension methods
+/// String Utility Class
 /// </summary>
 public class Utils :IDisposable
 {
+    private readonly Random _random;
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="Utils"/> class.
+    /// </summary>
+    public Utils()
+    {
+        _random = new Random();
+    }
+
     /// <summary>
     /// Specifies the settings for generating random strings.
     /// </summary>
@@ -88,21 +101,287 @@ public class Utils :IDisposable
                 chars = @"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
                 break;
             case RandomStringSettings.AlphaNumericSpecial:
-                chars = @"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_=+[]{}|;:',.<>/?`~";
+                chars =
+                    @"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_=+[]{}|;:',.<>/?`~";
                 break;
             case RandomStringSettings.AlphaNumericSpecialWithSpaces:
-                chars = @"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_=+[]{}|;:',.<>/?`~ ";
+                chars =
+                    @"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_=+[]{}|;:',.<>/?`~ ";
                 break;
             default:
                 chars = @"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
                 break;
         }
 
-        Random random = new Random();
-        return new string(Enumerable.Repeat(chars, length)
-            .Select(s => s[random.Next(s.Length)]).ToArray());
+        char[] result = new char[length];
+
+        for (int i = 0; i < length; i++)
+        {
+            int index = _random.Next(chars.Length);
+            result[i] = chars[index];
+        }
+
+        return new string(result);
     }
 
+    #region WordCounts
+
+    /// <summary>
+    /// Represents a word and its associated count, typically used for word frequency analysis.
+    /// </summary>
+    public struct WordCount
+    {
+        public string Word { get; set; }
+        public int Count { get; set; }
+    }
+
+
+    /// <summary>
+    /// Counts the occurrences of words in the provided text, splitting the text into lines - Windows OS.
+    /// </summary>
+    /// <param name="text">The input text to analyze. Each line in the text is treated as a separate window.</param>
+    /// <returns>
+    /// A dictionary where the key represents the window index (starting from 0) and the value is a <see cref="WordCount"/> structure
+    /// containing the word and its associated count for that window.
+    /// </returns>
+    /// <exception cref="ArgumentNullException">Thrown when the <paramref name="text"/> is <c>null</c>.</exception>
+    Dictionary<int, WordCount> CountWordsTextWindows(string text)
+    {
+        if (text == null)
+            throw new ArgumentNullException(nameof(text), "Input text cannot be null.");
+
+        var t = text.Trim();
+        if (t.Length == 0)
+            return new Dictionary<int, WordCount>();
+
+        t = t.RemovePunctuation().RemoveSymbols();
+        // ReSharper disable once IdentifierTypo
+        var tarr = t.Split("\r\n");
+
+        if (tarr.Length == 0)
+            return new Dictionary<int, WordCount>();
+
+        return CountWords(tarr);
+    }
+
+    /// <summary>
+    /// Counts the occurrences of words in the given text, splitting the text by Unix-style line breaks.
+    /// </summary>
+    /// <param name="text">The input text to analyze. Each line is processed separately.</param>
+    /// <returns>
+    /// A dictionary where the key is an integer representing the line number (starting from 0),
+    /// and the value is a <see cref="WordCount"/> structure containing the word and its count.
+    /// </returns>
+    /// <exception cref="ArgumentNullException">Thrown when the <paramref name="text"/> is <c>null</c>.</exception>
+    /// <remarks>
+    /// The method removes punctuation and symbols from the input text before counting words.
+    /// It is optimized for processing large text inputs efficiently.
+    /// </remarks>
+    Dictionary<int, WordCount> CountWordsTextUnix(string text)
+    {
+        if (text == null)
+            throw new ArgumentNullException(nameof(text), "Input text cannot be null.");
+
+        var t = text.Trim();
+        if (t.Length == 0)
+            return new Dictionary<int, WordCount>();
+
+        t = t.RemovePunctuation().RemoveSymbols();
+        // ReSharper disable once IdentifierTypo
+        var tarr = t.Split("\n");
+
+        if (tarr.Length == 0)
+            return new Dictionary<int, WordCount>();
+
+        return CountWords(tarr);
+    }
+
+    /// <summary>
+    /// Counts the occurrences of each unique word in the provided array of text lines.
+    /// </summary>
+    /// <param name="text">An array of strings, where each string represents a line of text to analyze.</param>
+    /// <returns>
+    /// A dictionary where the key is a hash of the word, and the value is a <see cref="WordCount"/> structure 
+    /// containing the word and its associated count.
+    /// </returns>
+    /// <remarks>
+    /// This method processes the input text by cleaning it (removing punctuation and symbols) and then 
+    /// splitting it into words. It uses a fast hash (FNV-1a) for performance optimization and minimizes 
+    /// allocations by leveraging <see cref="Span{T}"/>.
+    /// </remarks>
+    /// <exception cref="ArgumentNullException">Thrown if the <paramref name="text"/> parameter is null.</exception>
+    public Dictionary<int, WordCount> CountWords(string[] text)
+    {
+        var wordCounts = new Dictionary<int, WordCount>(capacity: 4096);
+        foreach (var line in text)
+        {
+            var cleanedLine = line.Trim();
+            if (cleanedLine.Length > 0)
+            {
+                cleanedLine = cleanedLine.RemovePunctuation().RemoveSymbols();
+            }
+            else
+            {
+                continue;
+            }
+
+            var l = cleanedLine.AsSpan().Trim();
+            if (l.IsEmpty)
+                continue;
+
+            int start = 0;
+            for (int i = 0; i <= l.Length; i++)
+            {
+                if (i == l.Length || char.IsWhiteSpace(l[i]))
+                {
+                    if (start < i)
+                    {
+
+                        var wordSpan = l.Slice(start, i - start);
+                        // Use a fast hash (FNV-1a) to avoid string allocation
+                        int hash = unchecked((int)2166136261u);
+                        for (int j = 0; j < wordSpan.Length; j++)
+                            hash = (hash ^ wordSpan[j]) * 16777619;
+
+                        if (wordCounts.TryGetValue(hash, out var wc))
+                        {
+                            // Compare actual word to avoid hash collision
+                            if (wordSpan.SequenceEqual(wc.Word.AsSpan()))
+                            {
+                                wc.Count++;
+                                wordCounts[hash] = wc;
+                            }
+                            else
+                            {
+                                // Collision: fallback to string key
+                                string word = wordSpan.ToString();
+                                int strHash = word.GetHashCode();
+                                if (wordCounts.TryGetValue(strHash, out var wc2) && wc2.Word == word)
+                                {
+                                    wc2.Count++;
+                                    wordCounts[strHash] = wc2;
+                                }
+                                else
+                                {
+                                    wordCounts[strHash] = new WordCount { Word = word, Count = 1 };
+                                }
+                            }
+                        }
+                        else
+                        {
+                            wordCounts[hash] = new WordCount { Word = wordSpan.ToString(), Count = 1 };
+                        }
+                    }
+                    start = i + 1;
+                }
+            }
+        }
+        return wordCounts;
+    }
+
+
+
+    /// <summary>
+    /// Counts the occurrences of each word in a text file and returns the results as a dictionary. Ideal for large files.
+    /// </summary>
+    /// <param name="filePath">The absolute path to the file to be processed.</param>
+    /// <returns>
+    /// A dictionary where the key is a hash of the word, and the value is a <see cref="WordCount"/> 
+    /// struct containing the word and its count.
+    /// </returns>
+    /// <exception cref="ArgumentNullException">Thrown when <paramref name="filePath"/> is null or empty.</exception>
+    /// <exception cref="FileNotFoundException">Thrown when the file specified by <paramref name="filePath"/> does not exist.</exception>
+    /// <exception cref="IOException">Thrown when an I/O error occurs while reading the file.</exception>
+    /// <remarks>
+    /// This method uses a hash-based approach to count words efficiently. It handles hash collisions
+    /// by comparing the actual word content. The method is optimized for large files and uses a 
+    /// default dictionary capacity of 8192 to minimize resizing overhead.
+    /// </remarks>
+    public Dictionary<int, WordCount> CountWordsFromFile(string filePath)
+    {
+        
+        var wordCounts = new Dictionary<int, WordCount>(capacity: 8192);
+        using StreamReader reader = new StreamReader(filePath);
+        string line;
+        while ((line = reader.ReadLine()) != null)
+        {
+            var l = line.AsSpan().Trim();
+            if (l.IsEmpty)
+                continue;
+
+            int start = 0;
+            for (int i = 0; i <= l.Length; i++)
+            {
+                if (i == l.Length || char.IsWhiteSpace(l[i]))
+                {
+                    if (start < i)
+                    {
+                        var wordSpan = l.Slice(start, i - start);
+                        // Use a fast hash (FNV-1a) to avoid string allocation
+                        int hash = unchecked((int)2166136261u);
+                        for (int j = 0; j < wordSpan.Length; j++)
+                            hash = (hash ^ wordSpan[j]) * 16777619;
+
+                        if (wordCounts.TryGetValue(hash, out var wc))
+                        {
+                            // Compare actual word to avoid hash collision
+                            if (wordSpan.SequenceEqual(wc.Word.AsSpan()))
+                            {
+                                wc.Count++;
+                                wordCounts[hash] = wc;
+                            }
+                            else
+                            {
+                                // Collision: fallback to string key
+                                string word = wordSpan.ToString();
+                                int strHash = word.GetHashCode();
+                                if (wordCounts.TryGetValue(strHash, out var wc2) && wc2.Word == word)
+                                {
+                                    wc2.Count++;
+                                    wordCounts[strHash] = wc2;
+                                }
+                                else
+                                {
+                                    wordCounts[strHash] = new WordCount { Word = word, Count = 1 };
+                                }
+                            }
+                        }
+                        else
+                        {
+                            wordCounts[hash] = new WordCount { Word = wordSpan.ToString(), Count = 1 };
+                        }
+                    }
+                    start = i + 1;
+                }
+            }
+        }
+
+        return wordCounts;
+    }
+
+
+    /// <summary>
+    /// Displays the word counts in descending order of frequency.
+    /// </summary>
+    /// <param name="wordCounts">
+    /// A dictionary where the key is an integer identifier, and the value is a <see cref="WordCount"/> 
+    /// representing a word and its associated count.
+    /// </param>
+    /// <param name="numberToDisplay">
+    /// The number of word counts to display. If set to 0 or a negative value, all word counts will be displayed.
+    /// </param>
+    public void DisplayWordCounts(Dictionary<int, WordCount> wordCounts, int numberToDisplay = 0)
+    {
+        var count = 1;
+        foreach (var wc in wordCounts.Values.OrderByDescending(w => w.Count))
+        {
+            $"{count}\t{wc.Word}:\t {wc.Count}".pl();
+            count++;
+            if (numberToDisplay > 0 && --numberToDisplay <= 0)
+                break;
+        }
+    }
+    #endregion
 
     /// <summary>
     /// Releases all resources used by the <see cref="Utils"/> class.
